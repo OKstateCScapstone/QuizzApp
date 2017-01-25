@@ -1,0 +1,15 @@
+/**
+ * Created by mgabilhe on 1/23/17.
+ */
+
+var express = require('express');
+var multer = require('multer');
+var parts = multer();
+var wrap = require('co-express');
+
+// Only use this as a sample template when starting a new routes file
+module.exports = function (app) {
+    app.get('/sample', parts.array(), wrap(function * (req, res) {
+
+    }));
+};

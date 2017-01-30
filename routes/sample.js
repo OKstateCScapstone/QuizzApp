@@ -11,7 +11,7 @@ var wrap = require('co-express');
 module.exports = function (app) {
     app.get('/sample', parts.array(), wrap(function * (req, res) {
         res.status(200).json({
-            message: "Hello word from sample"
+            message: "Hello word from sample!!! With Changes"
         })
     }));
 };

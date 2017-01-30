@@ -14,3 +14,6 @@ Instructor: Dr. David Cline
 3. Run ```npm install``` to install the node_modules and bower_components to your local machine
 4. Make sure the mongo service is running
 5. run the command ```node server.js```
+
+For mac users: How to automatically start Mongodb when the computer starts
+https://alicoding.com/how-to-start-mongodb-automatically-when-starting-your-mac-os-x/

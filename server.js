@@ -30,8 +30,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-// Listen for requests on a specific port
-app.listen(PORT);
+// Set the specific port
+app.set('port', PORT);
 
 // Compress middleware
 app.use(compression({filter: shouldCompress}));

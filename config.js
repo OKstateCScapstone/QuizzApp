@@ -4,6 +4,6 @@
 
 module.exports = {
     API_KEY: "",
-    DEV_DATABASE: "",
-    DATABASE: ""
+    DEV_DATABASE: "mongodb://localhost:27017/local",
+    DATABASE: "mongodb://localhost:27017/local"
 };

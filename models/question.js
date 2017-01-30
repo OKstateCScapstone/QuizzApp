@@ -4,6 +4,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+const DIFFICULTIES = ["Easy", "Medium", "Hard"];
+
 var questionSchema = new Schema({
     title: {
         type: String,
@@ -13,6 +15,16 @@ var questionSchema = new Schema({
         type: String,
         required: true
     },
+    problemType: String,
+    categories: [String],
+    difficulty: {
+        type: String,
+        enum: DIFFICULTIES,
+        default: DIFFICULTIES[0],
+        required: true,
+        index: true
+    },
+    points: Number,
     cliArguments: String,
     inputFiles: [String],
     outputFiles: [String],

@@ -2,10 +2,10 @@
  * Created by mgabilhe on 1/23/17.
  */
 
-var express = require('express');
-var multer = require('multer');
-var parts = multer();
-var wrap = require('co-express');
+const express = require('express');
+const multer = require('multer');
+const parts = multer();
+const wrap = require('co-express');
 
 // Only use this as a sample template when starting a new routes file
 module.exports = function (app) {

@@ -9,7 +9,10 @@
 (function () {
 
     var app = angular.module('CS4570', [
-
+        'ngRoute',
+        'ngCookies',
+        'ui.materialize',
+        'ui.codemirror'
     ]);
 
     window._base_url = "http://localhost:8000/api/";
@@ -17,7 +20,7 @@
     app.config(function ($httpProvider, $routeProvider, $locationProvider) {
         $routeProvider
             .when('/home', {
-                templateUrl: 'home/home.html',
+                templateUrl: 'views/home/home.html',
                 controller: 'HomeController',
                 controllerAs: 'ctrl'
             })

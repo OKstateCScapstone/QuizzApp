@@ -1,25 +1,19 @@
-/**
- * Created by mgabilhe on 1/23/17.
- */
 
-var fs = require('fs');
-var compression = require('compression');
-var path = require('path');
-var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var mongoose = require('mongoose');
-var config = require('./config');
-var app = express();
-var routes = express.Router();
+const fs = require('fs');
+const compression = require('compression');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const config = require('./config');
+const dbConfig = require('./dbConfig');
+const app = express();
+const routes = express.Router();
 
-var PORT = process.env.PORT || 3000;
-var DEBUG = process.env.DEBUG || true;
-var DB = DEBUG ? config.DEV_DATABASE : config.DATABASE;
+const PORT = process.env.PORT || 3000;
+const DEBUG = process.env.DEBUG || true;
 
-mongoose.Promise = global.Promise;
-mongoose.connect(DB); // connect to the database
-
+dbConfig.initDB(DEBUG);
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 

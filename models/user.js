@@ -18,9 +18,15 @@ const userSchema = new Schema({
     // Whether this user is a instructor or not
     isInstructor: {
         type: Boolean,
+        default: false,
         index: true
     },
-    cwid: String, // CWID of the student
+    // CWID of the student
+    cwid: {
+        type: String,
+        index: true,
+        unique: true,
+    },
     // Email used by the user as a username
     email: {
         type: String,

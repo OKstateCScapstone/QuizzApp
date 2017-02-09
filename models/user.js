@@ -18,15 +18,27 @@ const userSchema = new Schema({
     // Whether this user is a instructor or not
     isInstructor: {
         type: Boolean,
+        default: false,
         index: true
     },
-    cwid: String, // CWID of the student
+    // CWID of the student
+    cwid: {
+        type: String,
+        index: true,
+        unique: true,
+    },
     // Email used by the user as a username
     email: {
         type: String,
         required: true,
         unique: true,
-        index: true
+        index: true,
+        validate: {
+            validator: function (v) {
+                return isValidEmail(v);
+            },
+            message: '{VALUE} is not a valid email!'
+        }
     },
     // Users need to validate their email address before becoming active
     active: {
@@ -73,6 +85,10 @@ userSchema.methods.setPassword = function (password) {
  *      Whether this email is valid or not
  */
 userSchema.methods.isValidEmail = function (email) {
+    return isValidEmail(email);
+};
+
+const isValidEmail = function (email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 };

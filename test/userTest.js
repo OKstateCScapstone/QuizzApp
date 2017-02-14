@@ -42,7 +42,7 @@ describe('User Tests', function () {
         });
     });
 
-    describe('testCrudFunctions', function () {
+    describe('testCrudFunctions', () => {
 
         beforeEach((done) => {
             dbConfig.initTestDB(() => {
@@ -51,8 +51,9 @@ describe('User Tests', function () {
         });
 
         afterEach((done) => {
-            mongoose.connection.close();
-            done();
+            mongoose.connection.close(() => {
+                done();
+            });
         });
 
         it('user should be saved', function () {

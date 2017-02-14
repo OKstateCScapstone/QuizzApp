@@ -9,15 +9,16 @@ const VARS = require('./testVariables');
 
 describe('Reset Password Tests', function () {
 
-    beforeEach(function (done) {
+    beforeEach((done) => {
         dbConfig.initTestDB(function () {
             done();
         });
     });
 
-    afterEach(function (done) {
-        mongoose.connection.close();
-        done();
+    afterEach((done) => {
+        mongoose.connection.close(() => {
+            done();
+        });
     });
 
     describe('testCrudFunctions', function () {
@@ -25,7 +26,6 @@ describe('Reset Password Tests', function () {
         it('resetPassword should be saved', function () {
             return ResetPasswordController.save(VARS.USER_EMAIL)
                 .then(function (resetPassword) {
-                    console.log(resetPassword);
                     assert.isNotNull(resetPassword, "reset password is not null");
                 });
         });

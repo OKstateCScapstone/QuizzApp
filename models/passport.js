@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
-const User = require('./user');
+const User = require('../models/user');
 
 /**
  * Defines how passport should validate a user using LocalStrategy
@@ -24,11 +24,12 @@ passport.use(new LocalStrategy({
             }
 
             // Check if the user is active
-            if (!user.active) {
-                return done(null, false, {
-                    message: 'Account not active. Please check your email.'
-                });
-            }
+            // We are gonna ignore this for a while until we have a email to send emails
+            // if (!user.active) {
+            //     return done(null, false, {
+            //         message: 'Account not active. Please check your email.'
+            //     });
+            // }
 
             // Return if password is wrong
             if (!user.validPassword(password)) {

@@ -9,15 +9,16 @@ const VARS = require('./testVariables');
 
 describe('Activation Tests', function () {
 
-    beforeEach(function (done) {
+    beforeEach((done) => {
         dbConfig.initTestDB(function () {
             done();
         });
     });
 
-    afterEach(function (done) {
-        mongoose.connection.close();
-        done();
+    afterEach((done) => {
+        mongoose.connection.close(() => {
+            done();
+        });
     });
 
     describe('testCrudFunctions', function () {

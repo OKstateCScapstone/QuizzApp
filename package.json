@@ -8,7 +8,9 @@
     "npm": "4.0.5"
   },
   "scripts": {
-    "postinstall": "cd public && bower install"
+    "start": "node server.js",
+    "postinstall": "cd public && bower install",
+    "test" : "find ./test -name '*Test.js' | xargs mocha -R spec"
   },
   "author": "Okstate CS 4570",
   "license": "MIT",

@@ -19,12 +19,9 @@ chai.use(chaiHttp);
 describe('Auth Tests', function () {
 
     before((done) => {
-        //Before each test we clear the users database
-        co(function *() {
-            yield User.remove({}).exec();
-            yield Activation.remove({}).exec();
+        dbConfig.initTestDB(() => {
             done();
-        });
+        })
     });
 
     describe("User endpoints", () => {

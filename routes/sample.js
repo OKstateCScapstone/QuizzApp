@@ -1,7 +1,3 @@
-/**
- * Created by mgabilhe on 1/23/17.
- */
-
 const express = require('express');
 const multer = require('multer');
 const parts = multer();

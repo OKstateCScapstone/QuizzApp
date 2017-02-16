@@ -1,6 +1,8 @@
 const Q = require('q');
 const User = require('../models/user');
 
+const self = {};
+
 /**
  * find a specific user object from a query
  * @param query
@@ -18,6 +20,18 @@ const findOne = function (query) {
     return deferred.promise;
 };
 
+const find = function (query) {
+    const deferred = Q.defer();
+    User.find(query, function (err, users) {
+        if (err) {
+            deferred.reject(err);
+            return;
+        }
+        deferred.resolve(users);
+    });
+    return deferred.promise;
+};
+
 /**
  * Saves a JSON User representation to the database
  * @param user
@@ -25,7 +39,7 @@ const findOne = function (query) {
  * @return
  *      a Promise that gets fulfilled with a Mongoose model User object
  */
-module.exports.save = function (user) {
+self.save = function (user) {
     const deferred = Q.defer();
     const u = new User();
     u.email = user.email;
@@ -36,7 +50,7 @@ module.exports.save = function (user) {
     u.save(function (err, doc) {
         if (err) {
             deferred.reject(err);
-            return
+            return;
         }
         deferred.resolve(doc);
     });
@@ -50,7 +64,7 @@ module.exports.save = function (user) {
  * @return
  *     a Promise that gets fulfilled with a Mongoose model User object
  */
-module.exports.findByEmail = function (email) {
+self.findByEmail = function (email) {
     const query = {email: email};
     return findOne(query);
 };
@@ -63,9 +77,13 @@ module.exports.findByEmail = function (email) {
  * @return
  *      a Promise that gets fulfilled with a Mongoose model User object
  */
-module.exports.findByCWID = function (cwid) {
+self.findByCWID = function (cwid) {
     const query = {cwid: cwid};
     return findOne(query);
+};
+
+self.findUsers = function (query) {
+    return find(query);
 };
 
 /**
@@ -73,7 +91,7 @@ module.exports.findByCWID = function (cwid) {
  * @param id
  * @param fields
  */
-module.exports.update = function (id, fields) {
+self.update = function (id, fields) {
     // Not all user fields should be allowed to update
     // So we manually delete those objects just in case
     const deferred = Q.defer();
@@ -92,7 +110,7 @@ module.exports.update = function (id, fields) {
  *
  * @param id
  */
-module.exports.delete = function (id) {
+self.delete = function (id) {
     const deferred = Q.defer();
     User.findByIdAndRemove(id, function (err, user) {
         if (err) {
@@ -103,3 +121,5 @@ module.exports.delete = function (id) {
     });
     return deferred.promise;
 };
+
+module.exports = self;

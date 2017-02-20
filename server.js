@@ -27,6 +27,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
+process.env.UPLOAD_PATH = config.UPLOADS_PATH;
+
 // Set the specific port
 app.set('port', PORT);
 

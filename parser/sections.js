@@ -4,6 +4,14 @@
  */
 module.exports = {
     title: [],
+    info: [
+        "language",
+        "points",
+        "topics",
+        "difficulty",
+        "activeDate",
+        "dueDate"
+    ],
     question: [],
     solution: [],
     starterCode: [],
@@ -12,9 +20,5 @@ module.exports = {
     problemType: [],
     categories: [],
     difficulty: [],
-    cliArguments: [],
-    dates: [
-        "activeDate",
-        "dueDate"
-    ]
+    cliArguments: []
 };

@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "postinstall": "cd public && bower install",
-    "test" : "find ./test -name '*Test.js' | xargs mocha -R spec"
+    "test": "find ./test -name '*Test.js' | xargs mocha -R spec"
   },
   "author": "Okstate CS 4570",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "compression": "^1.6.2",
     "emailjs": "^1.0.8",
     "express": "^4.14.0",
+    "fs-extra": "^2.0.0",
     "jsonwebtoken": "^7.2.1",
     "moment": "^2.17.1",
     "mongoose": "^4.7.7",

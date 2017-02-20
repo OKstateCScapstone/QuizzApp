@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const compression = require('compression');
 const path = require('path');
@@ -9,11 +8,15 @@ const config = require('./config');
 const dbConfig = require('./dbConfig');
 const app = express();
 const routes = express.Router();
-
+const passport = require('passport');
 const PORT = process.env.PORT || 3000;
-const DEBUG = process.env.DEBUG || true;
 
-dbConfig.initDB(DEBUG);
+// [User auth] Bring in the data model
+require('./models/user');
+// [User auth] Bring in the Passport config after model is defined
+require('./models/passport');
+
+dbConfig.initDB();
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
@@ -38,6 +41,8 @@ function shouldCompress(req, res) {
     // fallback to standard filter function
     return compression.filter(req, res)
 }
+// [User auth] Initialize Passport local authentication middleware
+app.use(passport.initialize());
 
 // Add all the routes inside the routes folder
 require('./routes')(routes);
@@ -47,3 +52,5 @@ app.use('/api', routes);
 app.listen(app.get('port'), function () {
     console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
+
+module.exports = app; // for testing

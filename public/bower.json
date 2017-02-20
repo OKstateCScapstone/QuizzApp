@@ -22,5 +22,8 @@
     "angular-cookies": "^1.6.1",
     "materialize": "^0.98.0",
     "angular-materialize": "^0.2.2"
+  },
+  "resolutions": {
+    "materialize": "^0.98.0"
   }
 }

@@ -1,0 +1,46 @@
+<div id="myPanel" class="container">
+    <div class="card-panel  col s12 hoverable">
+        <div class="row center">
+            <img src="http://go.okstate.edu/sites/go.okstate.edu/themes/responsive_osu_main_page/images/logo.png"
+                 alt="Image" class="hoverable circle responsive-img">
+        </div>
+        <div class="row margin">
+            <div class="col s12">
+                <div class="input-field">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="email" type="email" name="email"
+                           ng-model="ctrl.user.email">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">lock_outline</i>
+                <input id="password" type="password" name="password" class="validate"
+                       ng-model="ctrl.user.password">
+                <label for="password" data-error="Wrong Password!">Password</label>
+            </div>
+        </div>
+        <div class="row margin">
+            <button class="waves-effect waves-green hoverable btn-large col s12 orange" ng-click="ctrl.login()"
+                    ng-disabled="!ctrl.enableSubmit()">
+                Log in
+            </button>
+        </div>
+
+        <div class="row margin center">
+            <div class="row col s4">
+                <input type="checkbox" id="rememberMe"/>
+                <label for="rememberMe">Remember Me</label>
+            </div>
+            <div class="row col s4">
+                <a href="#!/sign_up">Register Now!</a>
+            </div>
+            <div class="row col s4">
+                <a href="/api/forgot_password">Reset Password</a>
+            </div>
+        </div>
+    </div>
+</div>
+

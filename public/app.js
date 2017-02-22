@@ -15,13 +15,23 @@
         'ui.codemirror'
     ]);
 
-    window._base_url = "http://localhost:8000/api/";
+    window._base_url = "http://localhost:3000/api/";
 
     app.config(function ($httpProvider, $routeProvider, $locationProvider) {
         $routeProvider
             .when('/home', {
                 templateUrl: 'views/home/home.html',
                 controller: 'HomeController',
+                controllerAs: 'ctrl'
+            })
+            .when('/login', {
+                templateUrl: 'views/login/login.html',
+                controller: 'LoginController',
+                controllerAs: 'ctrl'
+            })
+            .when('/sign_up', {
+                templateUrl: 'views/login-signup/signup.html',
+                controller: 'SignUpController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

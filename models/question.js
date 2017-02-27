@@ -14,8 +14,18 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
+    // The user who owns this question. Only the user is allowed to update/delete
+    username: {
+        type: String,
+        index: true,
+        required: true
+    },
+    language: {
+        type: String,
+        default: "java"
+    },
     // The type of problem (Algorithm's, data structures, math, etc.)
-    problemType: String,
+    topics: String,
     // Categories to which this problem belongs to
     categories: [String],
     // The difficulty of this question
@@ -36,8 +46,8 @@ const questionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'TestCase'
     }],
-    // Path of the file with the code to be show to students
-    codeFile: String,
+    // String containing what we show to the user
+    starterCode: String,
     // The path of the file containing the completeSolution of the problem
     completeSolution: String,
     //Whether this question is active for grade or not

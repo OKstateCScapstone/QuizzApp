@@ -12,16 +12,22 @@
         'ngRoute',
         'ngCookies',
         'ui.materialize',
-        'ui.codemirror'
+        'ui.codemirror',
+        'ngFileUpload'
     ]);
 
-    window._base_url = "http://localhost:8000/api/";
+    window._base_url = "http://localhost:3000/api/";
 
     app.config(function ($httpProvider, $routeProvider, $locationProvider) {
         $routeProvider
             .when('/home', {
                 templateUrl: 'views/home/home.html',
                 controller: 'HomeController',
+                controllerAs: 'ctrl'
+            })
+            .when('/upload', {
+                templateUrl: 'views/upload/upload.html',
+                controller: 'ProblemUploadController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

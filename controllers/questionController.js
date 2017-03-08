@@ -1,5 +1,5 @@
 const Q = require('q');
-const User = require('../models/user');
+const Question = require('../models/question');
 
 const self = {};
 
@@ -10,7 +10,7 @@ const self = {};
  */
 const findOne = function (query) {
     const deferred = Q.defer();
-    User.findOne(query, function (err, user) {
+    Question.findOne(query, function (err, user) {
         if (err) {
             deferred.reject(err);
             return;
@@ -22,69 +22,57 @@ const findOne = function (query) {
 
 const find = function (query) {
     const deferred = Q.defer();
-    User.find(query, function (err, users) {
+    Question.find(query, function (err, questions) {
         if (err) {
             deferred.reject(err);
             return;
         }
-        deferred.resolve(users);
+        deferred.resolve(questions);
     });
     return deferred.promise;
 };
 
 /**
  * Saves a JSON Question representation to the database
- * @param user
- *      JSON object with some of the user properties
+ * @param question
+ *      JSON object with some of the question properties
  * @return
  *      a Promise that gets fulfilled with a Mongoose model Question object
  */
-self.save = function (user) {
+self.save = function (question) {
     const deferred = Q.defer();
-    const u = new User();
-    u.email = user.email;
-    u.firstName = user.firstName;
-    u.lastName = user.lastName;
-    u.setPassword(user.password);
-    u.cwid = user.cwid;
-    u.save(function (err, doc) {
+    const q = new Question(question);
+    q.save(function (err, question) {
         if (err) {
             deferred.reject(err);
             return;
         }
-        deferred.resolve(doc);
+        deferred.resolve(question);
     });
     return deferred.promise;
 };
 
 /**
- * Finds a specific user by email
+ * Finds a specific question by user email
  * @param email
  *      Email of the user
  * @return
- *     a Promise that gets fulfilled with a Mongoose model Question object
+ *     a Promise that gets fulfilled with a list of Mongoose model Question object
  */
-self.findByEmail = function (email) {
-    const query = {email: email};
-    return findOne(query);
-};
-
-/**
- * Finds a specific user using cwid
- * @param cwid
- *      the cwid of the user
- *
- * @return
- *      a Promise that gets fulfilled with a Mongoose model Question object
- */
-self.findByCWID = function (cwid) {
-    const query = {cwid: cwid};
-    return findOne(query);
-};
-
-self.findUsers = function (query) {
+self.findByUser = function (email) {
+    const query = {username: email};
     return find(query);
 };
+
+self.findQuestions = function (query) {
+    return find(query);
+};
+
+self.findById = function (id) {
+    const query = {_id: id};
+    return findOne(query);
+};
+
 
 /**
  *
@@ -92,16 +80,16 @@ self.findUsers = function (query) {
  * @param fields
  */
 self.update = function (id, fields) {
-    // Not all user fields should be allowed to update
+    // Not all question fields should be allowed to update
     // So we manually delete those objects just in case
     const deferred = Q.defer();
-    delete fields.email;
-    User.findByIdAndUpdate(id, { $set: fields }, { new: true }, function (err, user) {
+    delete fields.username;
+    Question.findByIdAndUpdate(id, { $set: fields }, { new: true }, function (err, question) {
         if (err) {
             deferred.reject(err);
             return;
         }
-        deferred.resolve(user);
+        deferred.resolve(question);
     });
     return deferred.promise;
 };
@@ -112,12 +100,12 @@ self.update = function (id, fields) {
  */
 self.delete = function (id) {
     const deferred = Q.defer();
-    User.findByIdAndRemove(id, function (err, user) {
+    Question.findByIdAndRemove(id, function (err, question) {
         if (err) {
             deferred.reject(err);
             return;
         }
-        deferred.resolve(user);
+        deferred.resolve(question);
     });
     return deferred.promise;
 };

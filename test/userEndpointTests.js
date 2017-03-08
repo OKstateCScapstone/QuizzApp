@@ -24,7 +24,7 @@ describe('Auth Tests', function () {
         })
     });
 
-    describe("User endpoints", () => {
+    describe("Question endpoints", () => {
         it('/GET users => it should GET all the users and be empty', (done) => {
             chai.request(server)
                 .get('/api/users')

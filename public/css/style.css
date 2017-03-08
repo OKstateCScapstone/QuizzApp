@@ -6,3 +6,36 @@ h3 {
 .top20 {
     margin-top: 20px;
 }
+
+.bottom20 {
+    margin-bottom: 20px;
+}
+
+.date-picker-hoverable {
+    background-color: white;
+}
+
+.date-picker-hoverable:hover {
+    background-color: rgba(230, 230, 230, 0.5);
+    cursor: pointer;
+}
+
+/*.inline-icon-text {*/
+    /*display: inline-flex;*/
+    /*vertical-align: middle;*/
+    /*align-items: center;*/
+/*}*/
+
+.material-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.public-pill {
+    background-color: #2bbbad;
+    border-radius: 20px;
+    color: whitesmoke;
+    padding: 5px 10px;
+}

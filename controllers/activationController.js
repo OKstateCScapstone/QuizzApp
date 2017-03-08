@@ -28,7 +28,7 @@ self.findByEmail = function (email) {
  * @param username
  *      Username of the user to which we would like to activate
  * @return
- *      a Promise that gets fulfilled with a Mongoose Activation User object
+ *      a Promise that gets fulfilled with a Mongoose Activation Question object
  */
 self.save = function (username) {
     const deferred = Q.defer();

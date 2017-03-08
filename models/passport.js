@@ -19,7 +19,7 @@ passport.use(new LocalStrategy({
             // Return if user not found in database
             if (!user) {
                 return done(null, false, {
-                    message: 'User not found'
+                    message: 'Question not found'
                 });
             }
 

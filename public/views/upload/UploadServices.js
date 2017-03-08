@@ -12,7 +12,7 @@
          * @param file
          *      The file to be upload
          * @param user
-         *      User that owns this file
+         *      Question that owns this file
          */
         self.uploadFile = function (file, user) {
             return Upload.upload({

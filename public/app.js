@@ -30,6 +30,21 @@
                 controller: 'ProblemUploadController',
                 controllerAs: 'ctrl'
             })
+            .when('/questionPreview/:id', {
+                templateUrl: 'views/question_preview/question.html',
+                controller: 'QuestionPreviewEditController',
+                controllerAs: 'ctrl'
+            })
+            .when('/editQuestion/:id', {
+                templateUrl: 'views/question_preview/question.html',
+                controller: 'QuestionPreviewEditController',
+                controllerAs: 'ctrl'
+            })
+            .when('/newQuestion', {
+                templateUrl: 'views/question_preview/question.html',
+                controller: 'QuestionPreviewEditController',
+                controllerAs: 'ctrl'
+            })
             .otherwise({
                 redirectTo: '/home'
             });

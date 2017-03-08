@@ -13,7 +13,7 @@ const config = require('../config');
 
 module.exports = function (app) {
     /**
-     * The body of this route should be a User object ONLY
+     * The body of this route should be a Question object ONLY
      * See the function save in UserController for the valid parameters
      */
     app.post('/sign_up', parts.array(), function (req, res) {

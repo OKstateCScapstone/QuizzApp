@@ -17,6 +17,25 @@ const completeSolution = "public class HelloWorld {\n" +
     "}\n" +
     "";
 
+const testCases = [
+    {
+        input: '3 4 < testFile.txt',
+        public: true
+    },
+    {
+        input: '11 9 < testFile.txt',
+        public: false
+    },
+    {
+        input: '200 30 < testFile2.txt',
+        public: false
+    },
+    {
+        input: '132 4931 < testFile2.txt',
+        public: false
+    }
+];
+
 self.singleQuestion = {
     _id: "58bb4a97de9d8a5e38ee75c4",
     title: "Title",
@@ -29,13 +48,14 @@ self.singleQuestion = {
     "Nam mattis eleifend dui, et lobortis sapien ullamcorper quis. Nam non ligula enim.",
     language: 'Java',
     topics: 'if statements, while loops, printf',
-    difficulty: 'Easy',
+    difficulty: 'Medium',
     activeDate: new Date(),
     dueDate: new Date(),
     updatedAt: new Date(),
     starterCode: starterCode,
     completeSolution: completeSolution,
-    points: 15
+    points: 15,
+    testCases: testCases
 };
 
 module.exports = self;

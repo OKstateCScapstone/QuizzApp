@@ -55,19 +55,19 @@ const questionSchema = new Schema({
     // The date this question will go active for grade
     activeDate: {
         type: Date,
-        default: Date.now(),
+        default: new Date(),
         index: true
     },
     // The date that this question is due (will become inactive after the due date)
     dueDate: {
         type: Date,
-        default: Date.now(),
+        default: new Date(),
         index: true
     },
     // Last time changes where made
     updatedAt: {
         type: Date,
-        default: Date.now(),
+        default: new Date(),
         index: true
     }
 });

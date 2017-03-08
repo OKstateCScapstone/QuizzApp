@@ -11,9 +11,9 @@ const routes = express.Router();
 const passport = require('passport');
 const PORT = process.env.PORT || 3000;
 
-// [User auth] Bring in the data model
+// [Question auth] Bring in the data model
 require('./models/user');
-// [User auth] Bring in the Passport config after model is defined
+// [Question auth] Bring in the Passport config after model is defined
 require('./models/passport');
 
 dbConfig.initDB();
@@ -43,7 +43,7 @@ function shouldCompress(req, res) {
     // fallback to standard filter function
     return compression.filter(req, res)
 }
-// [User auth] Initialize Passport local authentication middleware
+// [Question auth] Initialize Passport local authentication middleware
 app.use(passport.initialize());
 
 // Add all the routes inside the routes folder

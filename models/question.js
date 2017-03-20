@@ -42,9 +42,12 @@ const questionSchema = new Schema({
     cliArguments: String,
     // Test cases for this specific program
     testCases: [{
-        required: true,
-        type: Schema.Types.ObjectId,
-        ref: 'TestCase'
+        // input to be passed to java ProgramName
+        input: String,
+        // Output that should be printed to the console
+        output: String,
+        // Indicates where this test case is shown to the user or not
+        public: Boolean
     }],
     // String containing what we show to the user
     starterCode: String,

@@ -10,6 +10,7 @@ const Question = require('../models/question');
 const FileUploadController = require('../controllers/fileUploadController');
 const QuestionsController = require('../controllers/questionController');
 const TestQuestions = require('../testObjects/TestQuestions');
+const QuestionParser = require('../parser/parser');
 
 module.exports = function (app) {
     app.post('/upload_file', upload.single('file'), wrap(function *(req, res) {
@@ -17,16 +18,19 @@ module.exports = function (app) {
         const user = req.query.user;
         const path = file.filename;
         co(function *() {
-            const message = yield FileUploadController.readFile(path);
-            //TODO process the file
-            //TODO persist question to db
-            //TODO return question for user preview
+            const fileContents = yield FileUploadController.readFile(path);
+            var questionContents = QuestionParser.processFile(fileContents);
+            var question = yield QuestionsController.saveParsedQuestion(questionContents, user);
+            question.completeSolution = QuestionParser.saveSolutionForQuestion(question._id, fileContents);
+            yield question.save();
+            yield FileUploadController.saveFile(fileContents, question._id, "original.txt");
+            FileUploadController.removeFile(path);
             res.status(200).json({
                 success: true,
-                user: user,
-                data: message
+                data: question
             });
         }).catch(function (err) {
+            console.log(err.stack);
             res.status(500).json({
                 message: err.message
             });
@@ -47,6 +51,7 @@ module.exports = function (app) {
         co(function *() {
             const id = req.params.id;
             const question = yield QuestionsController.findById(id);
+            question.completeSolution = yield FileUploadController.readFileFromFullPath(question.completeSolution);
             res.status(200).json(question);
         }).catch(function (err) {
             res.status(500).json(err);

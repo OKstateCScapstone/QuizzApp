@@ -5,6 +5,10 @@ const config = require('../config');
 
 const self = {};
 
+self.removeFile = function (filePath) {
+    fs.remove(process.env.UPLOAD_PATH + "/" + filePath);
+};
+
 self.removeAllQuestionFiles = function (questionId) {
     const deferred = Q.defer();
     fs.remove(process.env.UPLOAD_PATH + "/" + questionId, function (err) {
@@ -18,9 +22,9 @@ self.removeAllQuestionFiles = function (questionId) {
     return deferred.promise;
 };
 
-self.readFile = function (path) {
+self.readFileFromFullPath = function (path) {
     const deferred = Q.defer();
-    fs.readFile(process.env.UPLOAD_PATH + "/" + path, (err, data) => {
+    fs.readFile(path, (err, data) => {
         if (err) {
             console.log(err);
             deferred.reject(err);
@@ -29,6 +33,10 @@ self.readFile = function (path) {
         deferred.resolve(data.toString());
     });
     return deferred.promise;
+};
+
+self.readFile = function (path) {
+    return self.readFileFromFullPath(process.env.UPLOAD_PATH + "/" + path);
 };
 
 self.saveFile = function(content, dir, filename) {

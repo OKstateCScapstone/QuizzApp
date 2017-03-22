@@ -4,7 +4,7 @@ const FileUploadController = require('../controllers/fileUploadController');
 const dbConfig = require('../dbConfig');
 const assert = require('chai').assert;
 const VARS = require('./testVariables');
-const Processor = require('../parser/processor');
+const Processor = require('../parser/parser');
 
 const FULL_PATH = VARS.TEST_FILE_ID + "/" + VARS.TEST_FILE_NAME;
 

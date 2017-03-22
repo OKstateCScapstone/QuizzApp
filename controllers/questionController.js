@@ -1,5 +1,6 @@
 const Q = require('q');
 const Question = require('../models/question');
+const moment = require('moment');
 
 const self = {};
 
@@ -50,6 +51,25 @@ self.save = function (question) {
         deferred.resolve(question);
     });
     return deferred.promise;
+};
+
+self.saveParsedQuestion = function (parsedQuestion, user) {
+    var q = {};
+    var info = parsedQuestion.info;
+    q.username = user;
+    q.title = parsedQuestion.title;
+    q.body = parsedQuestion.question;
+    q.completeSolution = parsedQuestion.solution;
+    q.starterCode = parsedQuestion.starterCode;
+    q.testCases = parsedQuestion.testCases;
+    q.points = parseInt(info.points);
+    q.language = info.language;
+    q.difficulty = info.difficulty;
+    q.topics = info.topics;
+    q.activeDate = moment(info.activeDate, "DD/MM/YYYY");
+    q.dueDate = moment(info.dueDate, "DD/MM/YYYY");
+    console.log(q);
+    return self.save(q);
 };
 
 /**

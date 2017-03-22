@@ -19,7 +19,7 @@
 
         self.getQuestion = function (id) {
             //TODO switch from dummy endpoint to normal endpoint
-            return $http.get($window._base_url + 'dummy/questions/' + id)
+            return $http.get($window._base_url + 'questions/' + id)
                     .then(self.success)
                     .catch(self.failure);
         };

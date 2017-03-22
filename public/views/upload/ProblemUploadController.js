@@ -18,6 +18,7 @@
                         .then(function (response) {
                             self.fileUploading = false;
                             console.log(response);
+                            $location.path("/questionPreview/" + response.data._id);
                         });
                 }
             };

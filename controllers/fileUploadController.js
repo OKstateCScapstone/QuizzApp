@@ -37,6 +37,7 @@ self.saveFile = function(content, dir, filename) {
     const fullPath = process.env.UPLOAD_PATH + "/" + dir;
     fs.ensureDir(fullPath, function (err) {
         if (err) {
+            console.log(err);
             deferred.reject(err);
             return;
         }

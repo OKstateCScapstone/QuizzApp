@@ -11,6 +11,9 @@ const FileUploadController = require('../controllers/fileUploadController');
 const QuestionsController = require('../controllers/questionController');
 const TestQuestions = require('../testObjects/TestQuestions');
 
+const VARS = require('../test/testVariables');
+const RunnerController = require('../controllers/runnerController');
+
 module.exports = function (app) {
     app.post('/upload_file', upload.single('file'), wrap(function *(req, res) {
         const file = req.file;
@@ -86,4 +89,21 @@ module.exports = function (app) {
         res.status(200).json(question);
     }));
 
+
+    app.get('/question_test', parts.array(), wrap(function * (req, res) {
+        const question = TestQuestions.singleQuestion;
+        const completeSolution = question.completeSolution;
+        const goodUserCode = question.goodUserCode;
+        const goodSplicedCode = question.goodSplicedCode;
+        const splicedCode = RunnerController.spliceCode(completeSolution, goodUserCode, "@1");
+        const userCode = question.goodUserCode;
+
+        co(function * () {
+            var result = yield RunnerController.compileAndRunTestCases(question, "test", userCode, false);
+            res.json(result);
+        }).catch(function(err) {
+
+            res.status(500).json(err);
+        });
+    }));
 };

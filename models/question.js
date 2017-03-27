@@ -38,8 +38,6 @@ const questionSchema = new Schema({
     },
     // How many points this assignment is worth for students
     points: Number,
-    // Cli arguments used by the program
-    cliArguments: String,
     // Test cases for this specific program
     testCases: [{
         // input to be passed to java ProgramName
@@ -48,6 +46,12 @@ const questionSchema = new Schema({
         output: String,
         // Indicates where this test case is shown to the user or not
         public: Boolean
+    }],
+    // Input files
+    inputFiles: [{
+        name: String,
+        contents: String,
+        reference: String
     }],
     // String containing what we show to the user
     starterCode: String,

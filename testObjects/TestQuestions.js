@@ -1,6 +1,6 @@
 const self = {};
 
-const starterCode = "public class HelloWorld {\n" +
+const starterCode = "public class SumArgs {\n" +
     "\n" +
     "   public static void main(String[] args) {\n" +
     "       \n" +
@@ -8,31 +8,60 @@ const starterCode = "public class HelloWorld {\n" +
     "}\n" +
     "";
 
-const completeSolution = "public class HelloWorld {\n" +
+const completeSolution = "public class SumArgs {\n" +
     "\n" +
     "   public static void main(String[] args) {\n" +
-    "       \n" +
-    "       System.out.println(\"Hello World\")\n" +
+    "       // @1\n" +
+    "       int sum = 0;\n" +
+    "       for (int i=0; i<args.length; i++) sum += Integer.parseInt(args[i]);\n" +
+    "       System.out.println(sum);\n" +
+    "       // @1\n" +
+    "   }\n" +
+    "}\n" +
+    "";
+
+const goodUserCode =
+    "       int sum = 0;\n" +
+    "       for (int i=0; i<args.length; i++) sum += Integer.parseInt(args[i]);\n" +
+    "       System.out.println(sum);\n" +
+    "";
+
+const goodSplicedCode =
+    "public class SumArgs {\n" +
+    "\n" +
+    "   public static void main(String[] args) {\n" +
+    "       // @1\n" +
+    "       int sum = 0;\n" +
+    "       for (int i=0; i<args.length; i++) sum += Integer.parseInt(args[i]);\n" +
+    "       System.out.println(sum);\n" +
+    "\n// @1\n" +
     "   }\n" +
     "}\n" +
     "";
 
 const testCases = [
     {
-        input: '3 4 < testFile.txt',
+        input: '3 4 < input.txt',
         public: true
     },
     {
-        input: '11 9 < testFile.txt',
+        input: '11 9',
         public: false
     },
     {
-        input: '200 30 < testFile2.txt',
+        input: '200 30',
         public: false
     },
     {
-        input: '132 4931 < testFile2.txt',
+        input: '132 4931',
         public: false
+    }
+];
+
+const inputFiles = [
+    {
+        name: "input.txt",
+        contents: "1 2 3 4"
     }
 ];
 
@@ -53,9 +82,13 @@ self.singleQuestion = {
     dueDate: new Date(),
     updatedAt: new Date(),
     starterCode: starterCode,
+    className: "SumArgs",
     completeSolution: completeSolution,
     points: 15,
-    testCases: testCases
+    testCases: testCases,
+    inputFiles: inputFiles,
+    goodUserCode: goodUserCode,
+    goodSplicedCode: goodSplicedCode
 };
 
 module.exports = self;

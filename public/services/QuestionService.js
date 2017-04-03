@@ -17,23 +17,20 @@
             return error;
         };
 
-        self.getQuestion = function (id) {
-            //TODO switch from dummy endpoint to normal endpoint
-            return $http.get($window._base_url + 'questions/' + id)
+        self.getEditQuestion = function (id) {
+            return $http.get($window._base_url + 'edit_questions/' + id)
                     .then(self.success)
                     .catch(self.failure);
         };
 
         self.updateQuestion = function(question) {
-            //TODO switch from dummy endpoint to normal endpoint
-            return $http.put($window._base_url + 'dummy/questions/' + question._id, question)
+            return $http.put($window._base_url + 'questions/' + question._id, question)
                 .then(self.success)
                 .catch(self.failure);
         };
 
         self.uploadQuestion = function(question) {
-            //TODO switch from dummy endpoint to normal endpoint
-            return $http.post($window._base_url + 'dummy/questions/' + question._id, question)
+            return $http.post($window._base_url + 'questions/' + question._id, question)
                 .then(self.success)
                 .catch(self.failure);
         };

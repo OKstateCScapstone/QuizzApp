@@ -11,9 +11,30 @@ const FileUploadController = require('../controllers/fileUploadController');
 const QuestionsController = require('../controllers/questionController');
 const TestQuestions = require('../testObjects/TestQuestions');
 const QuestionParser = require('../parser/parser');
+const fs = require('fs-extra');
 
 const VARS = require('../test/testVariables');
 const RunnerController = require('../controllers/runnerController');
+
+var saveInputFiles = function (question) {
+    co(function *() {
+        if (question.inputFiles) {
+            for (var i = 0; i < question.inputFiles.length; i++) {
+                var inputFile = question.inputFiles[i];
+                if (inputFile.name) {
+                    yield FileUploadController.saveFile(inputFile.contents, question._id, inputFile.name);
+                }
+            }
+        }
+    });
+};
+
+var saveCodeFiles = function (question, filename) {
+    const filePath = "uploads/" + question._id + "/" + filename;
+    fs.ensureDirSync("uploads/" + question._id);
+    fs.writeFileSync(filePath, question.completeSolution);
+    return filePath;
+};
 
 module.exports = function (app) {
     app.post('/upload_file', upload.single('file'), wrap(function *(req, res) {
@@ -27,6 +48,9 @@ module.exports = function (app) {
             question.completeSolution = QuestionParser.saveSolutionForQuestion(question._id, fileContents);
             yield question.save();
             yield FileUploadController.saveFile(fileContents, question._id, "original.txt");
+            // console.log(question.inputFiles);
+            saveInputFiles(question);
+
             FileUploadController.removeFile(path);
             res.status(200).json({
                 success: true,
@@ -50,12 +74,16 @@ module.exports = function (app) {
         });
     }));
 
-    app.get('/questions/:id', wrap(function *(req, res) {
+    app.get('/edit_questions/:id', wrap(function *(req, res) {
         co(function *() {
             const id = req.params.id;
             const question = yield QuestionsController.findById(id);
+            const filename = question.completeSolution.split('\\').pop().split('/').pop();
             question.completeSolution = yield FileUploadController.readFileFromFullPath(question.completeSolution);
-            res.status(200).json(question);
+            res.status(200).json({
+                question: question,
+                filename: filename
+            });
         }).catch(function (err) {
             res.status(500).json(err);
         });
@@ -64,17 +92,33 @@ module.exports = function (app) {
     app.post('/questions', wrap(function *(req, res) {
         co(function *() {
             const question = yield QuestionsController.save(req.body);
-            res.status(200).json(question)
+            const filename = req.body.filename;
+            saveInputFiles(question);
+            question.completeSolution = saveCodeFiles(question, filename);
+            yield question.save();
+            question.completeSolution = req.body.completeSolution;
+            res.status(200).json({
+                question: question,
+                filename: filename
+            })
         }).catch(function (err) {
             res.status(500).json(err);
         });
     }));
 
-    app.put('/questions', wrap(function *(req, res) {
+    app.put('/questions/:id', wrap(function *(req, res) {
         co(function *() {
-            const id = req.body._id;
+            const id = req.params.id;
+            const filename = req.body.filename;
             const question = yield QuestionsController.update(id, req.body);
-            res.status(200).json(question)
+            saveInputFiles(question);
+            question.completeSolution = saveCodeFiles(question, filename);
+            yield question.save();
+            question.completeSolution = req.body.completeSolution;
+            res.status(200).json({
+                question: question,
+                filename: filename
+            })
         }).catch(function (err) {
             res.status(500).json(err);
         });
@@ -94,8 +138,7 @@ module.exports = function (app) {
         res.status(200).json(question);
     }));
 
-
-    app.get('/question_test', parts.array(), wrap(function * (req, res) {
+    app.get('/question_test', parts.array(), wrap(function *(req, res) {
         const question = TestQuestions.singleQuestion;
         const completeSolution = question.completeSolution;
         const goodUserCode = question.goodUserCode;
@@ -103,10 +146,10 @@ module.exports = function (app) {
         const splicedCode = RunnerController.spliceCode(completeSolution, goodUserCode, "@1");
         const userCode = question.goodUserCode;
 
-        co(function * () {
+        co(function *() {
             var result = yield RunnerController.compileAndRunTestCases(question, "test", userCode, false);
             res.json(result);
-        }).catch(function(err) {
+        }).catch(function (err) {
 
             res.status(500).json(err);
         });

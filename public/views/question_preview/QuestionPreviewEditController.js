@@ -6,13 +6,24 @@
         '$location', '$rootScope', '$cookies', '$routeParams', 'questionService',
         function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, questionService) {
 
+            var self = this;
             $scope.difficulties = ["Easy", "Medium", "Hard"];
 
-            var self = this;
+            var path = $location.$$path;
+            if(path.search("questionPreview") > 0) {
+                self.questionType = "preview";
+            } else if (path.search("editQuestion") > 0) {
+                self.questionType = "edit";
+            } else {
+                self.questionType = "new";
+            }
+
             self.newTestCase = {};
+            self.newInputFile = {};
             self.questionId = $routeParams.id;
             self.question = {};
             self.question.testCases = [];
+            self.question.inputFiles = [];
             self.cmOption = {
                 lineNumbers: true,
                 mode: 'text/x-java',
@@ -25,9 +36,10 @@
             });
 
             if (self.questionId) {
-                questionService.getQuestion(self.questionId)
+                questionService.getEditQuestion(self.questionId)
                     .then(function (data) {
-                        self.question = data;
+                        self.question = data.question;
+                        self.question.filename = data.filename;
                         $('#body').trigger('autoresize');
                     });
             }
@@ -37,28 +49,44 @@
                 self.newTestCase = {};
             };
 
+            self.addInputFile = function () {
+                var inputFile = {};
+                if (self.newInputFile.isReference) {
+                    inputFile.reference = self.newInputFile.nameRef;
+                } else {
+                    inputFile.name = self.newInputFile.nameRef;
+                    inputFile.contents = self.newInputFile.contents;
+                }
+                self.question.inputFiles.push(inputFile);
+                self.newInputFile = {};
+            };
+
             self.submit = function () {
                 if (self.questionId) {
-                    self.upload();
+                    self.update();
                     return
                 }
-                self.update();
+                self.upload();
             };
 
             self.update = function () {
                 questionService.updateQuestion(self.question)
                     .then(function (result) {
-                        Materialize.toast('Question updated.', 4000);
-                        self.question = result;
+                        self.question = result.question;
+                        self.question.filename = result.filename;
+                        if (self.questionType == 'preview') {
+                            // TODO send to the user preview. Need the page to be done first
+                        } else {
+                            Materialize.toast('Question updated.', 4000);
+                        }
                     });
             };
 
             self.upload = function () {
                 questionService.uploadQuestion(self.question)
                     .then(function (result) {
-                        // TODO send to the user preview
+                        // TODO send to the user preview. Need the page to be done first
                     });
             };
-
         }]);
 })();

@@ -18,6 +18,13 @@ const removeTrailingLeadingQuotes = function (contents) {
     return contents.replace(/^"+|"+$/g, "");
 };
 
+const sanitize = function (contents) {
+    var newContent = removeTrailingLeadingNewLines(contents);
+    newContent = removeTrailingLeadingQuotes(newContent);
+    newContent = removeTrailingLeadingSpaces(newContent);
+    return newContent.split("\"").join("");
+};
+
 const infoTags = [
     "language",
     "points",
@@ -97,11 +104,65 @@ const parseTestCases = function (content, tag) {
     var rex = /(@testCase)[^]*?(@testCase)/g;
     var match = testCaseContents.match(rex);
     var testCases = [];
-    for(var i = 0; i < match.length; i++) {
-        var testCase = retrieveTagContents(match[i], "testCase");
-        testCases.push(parseSingleTestCase(testCase));
+    if (match) {
+        for(var i = 0; i < match.length; i++) {
+            var testCase = retrieveTagContents(match[i], "testCase");
+            testCases.push(parseSingleTestCase(testCase));
+        }
     }
     return testCases;
+};
+
+const parseInputFiles = function (content, tag) {
+    const inputContents = retrieveTagContents(content, tag);
+    var inputFiles = [];
+    inputFiles = inputFiles.concat(parseInputFileReference(inputContents));
+    inputFiles = inputFiles.concat(parseInputFileContents(inputContents));
+    return inputFiles;
+};
+
+const parseInputFileReference = function (inputContents) {
+    var rex = /(@inputRef)[^]*?(@inputRef)/g;
+    var match = inputContents.match(rex);
+    var inputFileReferences = [];
+    if (match) {
+        for(var i = 0; i < match.length; i++) {
+            var ref = retrieveTagContents(match[i], "inputRef");
+            var inputFile = {};
+            inputFile.reference = sanitize(ref);
+            inputFileReferences.push(inputFile);
+        }
+    }
+    return inputFileReferences;
+};
+
+const parseInputFileContents = function (inputContents) {
+    var rex = /(@inputFile)[^]*?(@inputFile)/g;
+    var match = inputContents.match(rex);
+    var inputFiles = [];
+    if (match) {
+        for(var i = 0; i < match.length; i++) {
+            var contents = retrieveTagContents(match[i], "inputFile");
+            if (contents) {
+                var inputFile = parseSingleInputContents(contents);
+                inputFiles.push(inputFile);
+            }
+        }
+    }
+    return inputFiles;
+};
+
+const parseSingleInputContents = function (contents) {
+    const lines = contents.split("\n");
+    var inputFile = {};
+    inputFile.contents = "";
+    if (lines.length > 0) {
+        inputFile.name = lines[0].split("\"").join("");
+    }
+    for(var i = 1; i < lines.length; i++) {
+        inputFile.contents += lines[i] + "\n";
+    }
+    return inputFile;
 };
 
 self.sections = {
@@ -109,7 +170,8 @@ self.sections = {
     info: parseInfo,
     question: retrieveTagContents,
     starterCode: retrieveTagContents,
-    testCases: parseTestCases
+    testCases: parseTestCases,
+    inputFiles: parseInputFiles
 };
 
 module.exports = self;

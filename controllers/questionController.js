@@ -68,7 +68,7 @@ self.saveParsedQuestion = function (parsedQuestion, user) {
     q.topics = info.topics;
     q.activeDate = moment(info.activeDate, "DD/MM/YYYY");
     q.dueDate = moment(info.dueDate, "DD/MM/YYYY");
-    console.log(q);
+    q.inputFiles = parsedQuestion.inputFiles;
     return self.save(q);
 };
 

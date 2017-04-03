@@ -11,6 +11,7 @@
     app.controller('HomeController', ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies',
         function ($http, $scope, $window, $filter, $location, $rootScope, $cookies) {
             var self = this;
+            $rootScope.currentPage = "home";
             self.controllerVar = "Home!"
         }]);
 })();

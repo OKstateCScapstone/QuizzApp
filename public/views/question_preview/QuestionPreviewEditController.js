@@ -12,10 +12,13 @@
             var path = $location.$$path;
             if(path.search("questionPreview") > 0) {
                 self.questionType = "preview";
+                $rootScope.currentPage = "upload";
             } else if (path.search("editQuestion") > 0) {
                 self.questionType = "edit";
+                $rootScope.currentPage = "my_questions";
             } else {
                 self.questionType = "new";
+                $rootScope.currentPage = "upload";
             }
 
             self.newTestCase = {};

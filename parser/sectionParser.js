@@ -64,6 +64,29 @@ const parseInfo = function (contents, tag) {
     return info;
 };
 
+self.extractCompleteSolution = function (fileContent, tagName) {
+    const tagContents = retrieveTagContents(fileContent, "solution");
+    const lines = tagContents.split("\n");
+    if (lines.length > 0) {
+        var codeContent = "";
+        for (var i = 1; i < lines.length; i++) {
+            codeContent += lines[i] + "\n";
+        }
+        return codeContent;
+    }
+    return "";
+};
+
+self.extractClassName = function (fileContent, tagName) {
+    const tagContents = retrieveTagContents(fileContent, "solution");
+    const lines = tagContents.split("\n");
+    if (lines.length > 0) {
+        var filename = lines[0].split("\"").join("");
+        return removeTrailingLeadingSpaces(filename);
+    }
+    return "";
+};
+
 self.saveCodeFile = function (questionId, fileContent) {
     const tagContents = retrieveTagContents(fileContent, "solution");
     const lines = tagContents.split("\n");
@@ -171,7 +194,9 @@ self.sections = {
     question: retrieveTagContents,
     starterCode: retrieveTagContents,
     testCases: parseTestCases,
-    inputFiles: parseInputFiles
+    inputFiles: parseInputFiles,
+    completeSolution: self.extractCompleteSolution,
+    className: self.extractClassName
 };
 
 module.exports = self;

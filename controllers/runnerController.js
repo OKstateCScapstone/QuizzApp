@@ -60,7 +60,9 @@ self.runCommandLine = function(commandLine) {
  * @param userCode
  *      The code that the user wrote
  * @param saveResults
- *      Whether we should save the results back into the question object
+ *      Whether we should save the results back into the question object.
+ *      Also determines whether to splice in userCode, or use the solution
+ *      code directly.
  */
 self.compileAndRunTestCases = function(question, userId, userCode, saveResults) {
     var deferred = Q.defer();
@@ -72,9 +74,11 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
         var runPath = "uploads/" + savePath;
 
         // splice code
-        //console.log("Splicing code...");
         const solutionCode = question.completeSolution;
-        var splicedCode = self.spliceCode(solutionCode, userCode, "@1");
+        var splicedCode = solutionCode;
+        if (saveResults == false) {
+            splicedCode = self.spliceCode(solutionCode, userCode, "@1");
+        }
         var saveFileName = question.className + ".java";
         var compileCommand = "javac " + runPath + saveFileName;
 
@@ -108,7 +112,6 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
 
             var runCommand = "java -classpath " + runPath + " "
                 + question.className + " " + args;
-            //console.log(runCommand);
             let thisRun = yield self.runCommandLine(runCommand);
             runStatus.push(thisRun);
 

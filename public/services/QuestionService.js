@@ -47,6 +47,12 @@
                 .catch(self.failure);
         };
 
+        self.getAllQuestions = function() {
+            return $http.get($window._base_url + 'questions/')
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         return self;
     }
 

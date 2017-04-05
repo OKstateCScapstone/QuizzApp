@@ -18,6 +18,10 @@ const removeTrailingLeadingQuotes = function (contents) {
     return contents.replace(/^"+|"+$/g, "");
 };
 
+const removeBrackets = function (contents) {
+    return contents.replace(/\[|\]/g, "");
+};
+
 const sanitize = function (contents) {
     var newContent = removeTrailingLeadingNewLines(contents);
     newContent = removeTrailingLeadingQuotes(newContent);
@@ -59,9 +63,25 @@ const parseInfo = function (contents, tag) {
     var info = {};
     for(var i = 0; i < infoTags.length; i++) {
         var currentTag = infoTags[i];
+        if (currentTag == 'topics') {
+            const topics = getSingleLineTagContent(infoContent, currentTag);
+            info[currentTag] = parseTopics(topics);
+            continue;
+        }
         info[currentTag] = getSingleLineTagContent(infoContent, currentTag);
     }
     return info;
+};
+
+const parseTopics = function(contents) {
+    // var topics = [];
+    // James, parse the topics into the array here.
+    var topics = contents.split(",");
+    for(var i = 0; i  < topics.length; i++)
+    {
+        topics[i] = removeBrackets(topics[i]);
+    }
+    return topics;
 };
 
 self.extractCompleteSolution = function (fileContent, tagName) {

@@ -74,6 +74,11 @@
                 controller: 'QuestionPreviewEditController',
                 controllerAs: 'ctrl'
             })
+            .when('/listProblems', {
+                templateUrl: 'views/listProblems/listProblems.html',
+                controller: 'listProblemsController',
+                controllerAs: 'ctrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

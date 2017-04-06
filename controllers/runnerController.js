@@ -3,6 +3,7 @@ const co = require('co');
 const Q = require('q');
 const FileUploadController = require('../controllers/fileUploadController');
 const exec = require('child_process').exec;
+const UserSubmission = require("../models/userSubmission");
 
 const self = {};
 
@@ -60,7 +61,9 @@ self.runCommandLine = function(commandLine) {
  * @param userCode
  *      The code that the user wrote
  * @param saveResults
- *      Whether we should save the results back into the question object
+ *      Whether we should save the results back into the question object.
+ *      Also determines whether to splice in userCode, or use the solution
+ *      code directly.
  */
 self.compileAndRunTestCases = function(question, userId, userCode, saveResults) {
     var deferred = Q.defer();
@@ -72,9 +75,11 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
         var runPath = "uploads/" + savePath;
 
         // splice code
-        //console.log("Splicing code...");
         const solutionCode = question.completeSolution;
-        var splicedCode = self.spliceCode(solutionCode, userCode, "@1");
+        var splicedCode = solutionCode;
+        if (saveResults == false) {
+            splicedCode = self.spliceCode(solutionCode, userCode, "@1");
+        }
         var saveFileName = question.className + ".java";
         var compileCommand = "javac " + runPath + saveFileName;
 
@@ -108,7 +113,6 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
 
             var runCommand = "java -classpath " + runPath + " "
                 + question.className + " " + args;
-            //console.log(runCommand);
             let thisRun = yield self.runCommandLine(runCommand);
             runStatus.push(thisRun);
 
@@ -127,6 +131,27 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
     }).catch(function(error) {
         console.log(error.stack);
         deferred.reject(error);
+    });
+    return deferred.promise;
+};
+
+/**
+ * Saves a user submission to the database
+ * @param submission
+ *      JSON object with some of the question properties
+ * @return
+ *      a Promise that gets fulfilled with a Mongoose model UserSubmission object
+ */
+self.saveUserSubmission = function (submission) {
+    const deferred = Q.defer();
+    const us = new UserSubmission(submission);
+    console.log("saving " + submission);
+    us.save(function (err, submission) {
+        if (err) {
+            deferred.reject(err);
+            return;
+        }
+        deferred.resolve(submission);
     });
     return deferred.promise;
 };

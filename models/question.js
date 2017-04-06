@@ -76,6 +76,11 @@ const questionSchema = new Schema({
         type: Date,
         default: new Date(),
         index: true
+    },
+    // Class name
+    className: {
+        type: String,
+        index: true
     }
 });
 

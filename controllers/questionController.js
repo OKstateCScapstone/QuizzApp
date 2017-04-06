@@ -59,8 +59,9 @@ self.saveParsedQuestion = function (parsedQuestion, user) {
     q.username = user;
     q.title = parsedQuestion.title;
     q.body = parsedQuestion.question;
-    q.completeSolution = parsedQuestion.solution;
+    q.completeSolution = parsedQuestion.completeSolution;
     q.starterCode = parsedQuestion.starterCode;
+    q.className = parsedQuestion.className;
     q.testCases = parsedQuestion.testCases;
     q.points = parseInt(info.points);
     q.language = info.language;
@@ -69,6 +70,7 @@ self.saveParsedQuestion = function (parsedQuestion, user) {
     q.activeDate = moment(info.activeDate, "DD/MM/YYYY");
     q.dueDate = moment(info.dueDate, "DD/MM/YYYY");
     q.inputFiles = parsedQuestion.inputFiles;
+
     return self.save(q);
 };
 

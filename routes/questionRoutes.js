@@ -45,8 +45,6 @@ module.exports = function (app) {
             const fileContents = yield FileUploadController.readFile(path);
             var questionContents = QuestionParser.processFile(fileContents);
             var question = yield QuestionsController.saveParsedQuestion(questionContents, user);
-            question.completeSolution = QuestionParser.saveSolutionForQuestion(question._id, fileContents);
-            yield question.save();
             yield FileUploadController.saveFile(fileContents, question._id, "original.txt");
             // console.log(question.inputFiles);
             saveInputFiles(question);
@@ -78,8 +76,7 @@ module.exports = function (app) {
         co(function *() {
             const id = req.params.id;
             const question = yield QuestionsController.findById(id);
-            const filename = question.completeSolution.split('\\').pop().split('/').pop();
-            question.completeSolution = yield FileUploadController.readFileFromFullPath(question.completeSolution);
+            const filename = question.className + ".java";
             res.status(200).json({
                 question: question,
                 filename: filename
@@ -94,9 +91,8 @@ module.exports = function (app) {
             const question = yield QuestionsController.save(req.body);
             const filename = req.body.filename;
             saveInputFiles(question);
-            question.completeSolution = saveCodeFiles(question, filename);
+            question.classname = filename.replace(".java", "");
             yield question.save();
-            question.completeSolution = req.body.completeSolution;
             res.status(200).json({
                 question: question,
                 filename: filename
@@ -113,11 +109,9 @@ module.exports = function (app) {
             const filename = req.body.filename;
             delete req.body.filename;
             const question = yield QuestionsController.update(id, req.body);
+            question.classname = filename.replace(".java", "");
             saveInputFiles(question);
-            question.completeSolution = saveCodeFiles(question, filename);
             yield question.save();
-            console.log(question);
-            question.completeSolution = req.body.completeSolution;
             res.status(200).json({
                 question: question,
                 filename: filename

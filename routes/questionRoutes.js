@@ -105,7 +105,9 @@ module.exports = function (app) {
     app.put('/questions/:id', wrap(function *(req, res) {
         co(function *() {
             const id = req.params.id;
+            console.log(req.body);
             const filename = req.body.filename;
+            delete req.body.filename;
             const question = yield QuestionsController.update(id, req.body);
             question.classname = filename.replace(".java", "");
             saveInputFiles(question);
@@ -115,6 +117,7 @@ module.exports = function (app) {
                 filename: filename
             })
         }).catch(function (err) {
+             console.log(err.stack);
             res.status(500).json(err);
         });
     }));

@@ -9,6 +9,8 @@
             self.fileUploading = false;
             $cookies.put("email", "test@email.com");
 
+            $rootScope.currentPage = "upload";
+
             self.submit = function () {
                 if ($scope.questionFile) {
                     console.log($scope.questionFile);

@@ -3,6 +3,7 @@ const co = require('co');
 const Q = require('q');
 const FileUploadController = require('../controllers/fileUploadController');
 const exec = require('child_process').exec;
+const UserSubmission = require("../models/userSubmission");
 
 const self = {};
 
@@ -130,6 +131,27 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
     }).catch(function(error) {
         console.log(error.stack);
         deferred.reject(error);
+    });
+    return deferred.promise;
+};
+
+/**
+ * Saves a user submission to the database
+ * @param submission
+ *      JSON object with some of the question properties
+ * @return
+ *      a Promise that gets fulfilled with a Mongoose model UserSubmission object
+ */
+self.saveUserSubmission = function (submission) {
+    const deferred = Q.defer();
+    const us = new UserSubmission(submission);
+    console.log("saving " + submission);
+    us.save(function (err, submission) {
+        if (err) {
+            deferred.reject(err);
+            return;
+        }
+        deferred.resolve(submission);
     });
     return deferred.promise;
 };

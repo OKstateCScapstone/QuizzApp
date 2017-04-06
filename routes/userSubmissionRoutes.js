@@ -7,6 +7,7 @@ const co = require('co');
 const QuestionController = require('../controllers/questionController');
 const TestQuestions = require('../testObjects/TestQuestions');
 
+const UserSubmission = require("../models/userSubmission");
 const RunnerController = require('../controllers/runnerController');
 
 module.exports = function (app) {
@@ -50,12 +51,13 @@ module.exports = function (app) {
 
             // Create User Submission object
             var userSubmission = {
+                question: question,
                 username: userName,
-                question: questionId,  // ?????????? Can this be a String
                 code: userCode,
                 results: results,
                 score: score
             };
+            yield RunnerController.saveUserSubmission(userSubmission);
 
             // Return the user submission object
             res.status(200).json({

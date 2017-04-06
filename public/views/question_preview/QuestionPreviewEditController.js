@@ -8,17 +8,14 @@
 
             var self = this;
             $scope.difficulties = ["Easy", "Medium", "Hard"];
-
+            $rootScope.currentPage = "my_questions";
             var path = $location.$$path;
             if(path.search("questionPreview") > 0) {
                 self.questionType = "preview";
-                $rootScope.currentPage = "upload";
             } else if (path.search("editQuestion") > 0) {
                 self.questionType = "edit";
-                $rootScope.currentPage = "my_questions";
             } else {
                 self.questionType = "new";
-                $rootScope.currentPage = "upload";
             }
 
             self.newTestCase = {};
@@ -65,6 +62,7 @@
             };
 
             self.submit = function () {
+                self.question.difficulty = self.question.difficulty.replace(/\s\s*$/gm, "");
                 if (self.questionId) {
                     self.update();
                     return

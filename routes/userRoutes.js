@@ -118,4 +118,23 @@ module.exports = function (app) {
             res.redirect(config.SERVER_URL + "/activated?success=false");
         });
     });
+
+    app.get('/users/:id', parts.array(), function (req, res) {
+        co(function *() {
+            const id = req.params.id;
+            var user = yield UserController.findById(id);
+            if (user) {
+                res.json(user);
+                return;
+            }
+            res.status(500).json({
+                message: "User with id: " + id + " not found."
+            });
+        }).catch(function (err) {
+            console.log(err); // log the error to the console
+            res.status(500).json({
+                message: err.message
+            });
+        });
+    });
 };

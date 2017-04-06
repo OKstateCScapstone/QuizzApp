@@ -23,8 +23,20 @@
                     .catch(self.failure);
         };
 
+        self.getInstructorQuestions = function (email) {
+            return $http.get($window._base_url + 'questions/?username=' + email)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         self.updateQuestion = function(question) {
             return $http.put($window._base_url + 'questions/' + question._id, question)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
+        self.deleteQuestion = function (question) {
+            return $http.delete($window._base_url + 'questions/' + question._id)
                 .then(self.success)
                 .catch(self.failure);
         };

@@ -1,6 +1,15 @@
-/* Just here to make sure everything is hooked up correctly */
-h3 {
-    color: blue;
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.top10 {
+    margin-top: 10px;
 }
 
 .top20 {

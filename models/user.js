@@ -27,6 +27,11 @@ const userSchema = new Schema({
         index: true,
         unique: true,
     },
+    enrolledCourses: [{
+        type: Schema.Types.ObjectId,
+        ref: "Course",
+        index: true
+    }],
     // Email used by the user as a username
     email: {
         type: String,

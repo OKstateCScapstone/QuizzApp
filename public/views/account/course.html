@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row top20">
+
+        <div class="col s12 m9">
+            <h5>{{ ctrl.course.name }}</h5>
+        </div>
+        <div class="col s12 m3">
+            <a href class="waves btn teal darken-2 white-text top10" data-target='newQuizzModal' modal>
+                &nbsp;&nbsp;&nbsp;Add Quizz&nbsp;&nbsp;&nbsp;
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<div ng-include="'views/account/new_quizz_modal.html'"></div>
+
+<div class="modal" id="deleteModal">
+    <div class="modal-content">
+        <h5>Delete confirmation</h5>
+        <p>Are you sure you want to permanently delete this quizz?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:" ng-click="ctrl.deleteQuizz()" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Delete</a>
+        <a href="javascript:" class="grey-text modal-close modal-action waves-effect waves-red btn-flat">Cancel</a>
+    </div>
+</div>

@@ -121,7 +121,6 @@ module.exports = function (app) {
     app.put('/questions/:id', wrap(function *(req, res) {
         co(function *() {
             const id = req.params.id;
-            console.log(req.body);
             const filename = req.body.filename;
             delete req.body.filename;
             const question = yield QuestionsController.update(id, req.body);
@@ -134,6 +133,18 @@ module.exports = function (app) {
             })
         }).catch(function (err) {
              console.log(err.stack);
+            res.status(500).json(err);
+        });
+    }));
+
+    app.delete('/questions/:id', wrap(function *(req, res) {
+        co(function *() {
+            const id = req.params.id;
+            yield QuestionsController.delete(id);
+            fs.removeSync('uploads/' + id);
+            res.status(200).json(true)
+        }).catch(function (err) {
+            console.log(err.stack);
             res.status(500).json(err);
         });
     }));

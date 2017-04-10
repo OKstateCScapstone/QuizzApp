@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row top20">
+
+        <div class="row">
+            <h6>Welcome {{ ctrl.user.firstName }} {{ ctrl.user.lastName }}, </h6>
+        </div>
+
+        <div class="col s12 m9">
+            <h5>Courses</h5>
+        </div>
+        <div class="col s12 m3">
+            <a href class="waves btn teal darken-2 white-text top10" data-target='newCourseModal' modal>
+                &nbsp;&nbsp;&nbsp;Add Course&nbsp;&nbsp;&nbsp;
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="striped table-responsive centered top20">
+            <thead>
+            <tr class="grey-text text-darken-4">
+                <th>Name</th>
+                <th>Description</th>
+                <th>Season</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Code</th>
+                <th colspan="3"> </th>
+                <th>View</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="course in ctrl.courses | filter:search:strict | orderBy:predicate:reverse">
+                <td> {{ course.name }}</td>
+                <td> {{ course.description | limitTo : 60}}{{ course.description.length > 60 ? "..." : "" }}</td>
+                <td> {{ course.season }}</td>
+                <td> {{ course.startDate | date: date }}</td>
+                <td> {{ course.endDate | date: date }}</td>
+                <td> {{ course.code }}</td>
+                <td>
+                    <a href data-target='newCourseModal' modal ng-click="ctrl.editCourse(course)" class="indigo-text">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </td>
+                <td>
+                    <a href data-target="deleteModal" modal ng-click="ctrl.deleteCourse(course)" class="red-text">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+                <td>
+                    <a href data-target="newQuizzModal" modal ng-click="ctrl.newQuizz(course)" class="teal-text text-darken-2">
+                        New Quizz
+                    </a>
+                </td>
+                <td>
+                    <a href ng-click="ctrl.viewCourse(course)" class="modal-action modal-close orange-text text-darken-3">
+                        <i class="material-icons">open_in_new</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div ng-include="'views/account/new_course_modal.html'"></div>
+<div ng-include="'views/account/new_quizz_modal.html'"></div>
+
+<div class="modal" id="deleteModal">
+    <div class="modal-content">
+        <h5>Delete confirmation</h5>
+        <p>Are you sure you want to permanently delete this course?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:" ng-click="ctrl.deleteCourse()" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Delete</a>
+        <a href="javascript:" class="grey-text modal-close modal-action waves-effect waves-red btn-flat">Cancel</a>
+    </div>
+</div>

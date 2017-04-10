@@ -19,10 +19,39 @@
     window._base_url = "http://localhost:3000/api/";
 
     app.config(function ($httpProvider, $routeProvider, $locationProvider) {
+        // Intercepts Http request to add a Token to the headers
+        $httpProvider.interceptors.push('authInterceptor');
+        // Increases the timeout in case someone is having a slow connection while uploading
+        $httpProvider.defaults.timeout = 5000;
         $routeProvider
-            .when('/home', {
+            .when('/', {
                 templateUrl: 'views/home/home.html',
                 controller: 'HomeController',
+                controllerAs: 'ctrl'
+            })
+            .when('/account', {
+                templateUrl: 'views/account/account.html',
+                controller: 'MyAccountController',
+                controllerAs: 'ctrl'
+            })
+            .when('/course/:id', {
+                templateUrl: 'views/account/course.html',
+                controller: 'CourseController',
+                controllerAs: 'ctrl'
+            })
+            .when('/my_questions', {
+                templateUrl: 'views/my_questions/my_questions.html',
+                controller: 'MyQuestionsController',
+                controllerAs: 'ctrl'
+            })
+            .when('/sign_in', {
+                templateUrl: 'views/sign_in/sign_in.html',
+                controller: 'SignInController',
+                controllerAs: 'ctrl'
+            })
+            .when('/sign_up', {
+                templateUrl: 'views/sign_up/sign_up.html',
+                controller: 'SignUpController',
                 controllerAs: 'ctrl'
             })
             .when('/upload', {
@@ -46,8 +75,29 @@
                 controllerAs: 'ctrl'
             })
             .otherwise({
-                redirectTo: '/home'
+                redirectTo: '/'
             });
+    });
+
+    app.factory('authInterceptor', function ($rootScope, $q, $cookies, $location) {
+        return {
+            request: function (config) {
+                config.headers = config.headers || {};
+                var token = $cookies.get("token");
+                if (token) {
+                    config.headers.Authorization = 'Token ' + token;
+                }
+                return config;
+            },
+            response: function (response) {
+                if (response.status === 401) {
+                    // handle the case where the user is not authenticated
+                    $cookies.remove("token");
+                    $location.path('/');
+                }
+                return response || $q.when(response);
+            }
+        };
     });
 
     app.filter("sanitize", ['$sce', function($sce) {

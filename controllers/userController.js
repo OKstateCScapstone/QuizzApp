@@ -86,6 +86,11 @@ self.findUsers = function (query) {
     return find(query);
 };
 
+self.findById = function (id) {
+    const query = {_id: id};
+    return findOne(query);
+};
+
 /**
  *
  * @param id

@@ -3,20 +3,19 @@
 
 (function () {
     var app = angular.module('CS4570');
-    app.controller('ProblemUploadController', ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies', 'uploadService',
-        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, uploadService) {
+    app.controller('ProblemUploadController',
+        ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies', 'uploadService', 'encodeService',
+        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, uploadService, encodeService) {
             var self = this;
             self.fileUploading = false;
-            $cookies.put("email", "test@email.com");
-
             $rootScope.currentPage = "upload";
 
             self.submit = function () {
                 if ($scope.questionFile) {
                     console.log($scope.questionFile);
                     self.fileUploading = true;
-                    var user = $cookies.get("email");
-                    uploadService.uploadFile($scope.questionFile, user)
+                    var user = JSON.parse(encodeService.decode64($cookies.get("user")));
+                    uploadService.uploadFile($scope.questionFile, user.email)
                         .then(function (response) {
                             self.fileUploading = false;
                             console.log(response);

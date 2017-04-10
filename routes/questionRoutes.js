@@ -86,6 +86,22 @@ module.exports = function (app) {
         });
     }));
 
+    app.get('/questions/:id', wrap(function *(req, res) {
+        co(function *() {
+            const id = req.params.id;
+            const question = yield QuestionsController.findById(id);
+            question.filename = undefined;
+            question.completeSolution = undefined;
+            question.username = undefined;
+            question.testCases = undefined;
+            question.inputFiles = undefined;
+            question.__v = undefined;
+            res.status(200).json(question);
+        }).catch(function (err) {
+            res.status(500).json(err);
+        });
+    }));
+
     app.post('/questions', wrap(function *(req, res) {
         co(function *() {
             const question = yield QuestionsController.save(req.body);

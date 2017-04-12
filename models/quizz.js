@@ -24,7 +24,7 @@ const quizzSchema = new Schema({
         required: true,
         index: true
     },
-    question: [{
+    questions: [{
         type: Schema.Types.ObjectId,
         ref: "Question",
         index: true

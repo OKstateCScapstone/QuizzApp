@@ -19,7 +19,7 @@ const removeTrailingLeadingQuotes = function (contents) {
 };
 
 const removeBrackets = function (contents) {
-    return contents.replace(/\[|\]/g, "");
+    return contents.replace(/\[|\]|/g, "");
 };
 
 const sanitize = function (contents) {
@@ -75,7 +75,6 @@ const parseInfo = function (contents, tag) {
 
 const parseTopics = function(contents) {
     // var topics = [];
-    // James, parse the topics into the array here.
     var topics = contents.split(",");
     for(var i = 0; i  < topics.length; i++)
     {

@@ -1,90 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List Problems</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
-</head>
-<body ng-app="CS4570 ListProblems" ng-controller="listProblemsController">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-
-            <div ng-repeat="topic in ctrl.topics" class="page-header">
+<div class="container">
+    <!--
+    <div class="page-header">
+        <div>
+            <a ng-repeat="topic in ctrl.activeTopics" ng-click="ctrl.removeTag(topic)" class="chip yellow">
                 {{topic}}
-            </div>
+            </a>
+            <a ng-repeat="topic in ctrl.topics" ng-click="ctrl.addTag(topic)" class="chip orange">
+                {{topic}}
+            </a>
+        </div>
+    </div>
+    -->
+    <div class="row">
 
-            <div ng-repeat="post in ctrl.posts | orderBy: '-language'">
-
-
-                <div class="col s12 l6">
-                    <div class="z-depth-3">
-                        <div class="card horizontal">
-                            <div class="card-stacked cyan lighten-3">
-                                <div class="card-content green-text text-darken-3">
-                                    <p>{{post.body}}</p>
-                                </div>
-                                <div class="card-action orange-text text-darken-4">
-                                    <a ng-href="#!/editQuestion/{{post._id}}">View Problem</a>
-                                </div>
+        <div ng-repeat="post in ctrl.activePosts | filter:{active:true} | orderBy: '-date'">
+            <div class="col s12 m6">
+                <div class="z-depth-3">
+                    <div class="card horizontal">
+                        <div class="card-stacked grey darken-2">
+                            <div class="card-content white-text">
+                                <h5>{{post.title}}</h5>
+                                <p>{{post.body}}</p>
+                                <br />
+                                <p>Worth {{post.points}} points</p>
+                                <p>Due {{post.dueDate | date:date}}</p>
+                                <!--p>{{post.language}}</p-->
+                                <!--p>{{post.topics}}</p-->
+                            </div>
+                            <div class="card-action orange-text text-darken-3">
+                                <!--a ng-href="#!/editQuestion/{{post._id}}">View Problem</a-->
+                                <a ng-href="#!/question/{{post.id}}">View Problem</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-                <!--
-                <i class="material-icons green-text" ng-click="ctrl.incrementUpvotes(post)">thumb_up</i>
-
-                {{post.upvotes}}
-                <span style="font-size:20px; margin-left:10px;">
-                    <a ng-show="post.link" href="{{post.link}}">
-                      {{post.title}}
-                    </a>
-                    <span ng-hide="post.link">
-                        {{post.title}}
-                    </span>
-                </span>
-                -->
             </div>
-
-            <hr />
-
-            <!--
-            <div style="margin-top:30px;">
-                <h3>Save a new test question</h3>
-
-                <div class="form-group">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Title"
-                           ng-model="ctrl.title">
-                </div>
-                <div class="form-group">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Id"
-                           ng-model="ctrl.newQuestionID">
-                </div>
-                <button type="submit" ng-click="ctrl.addPost()">Post</button>
-            </div>
-
-            <div style="margin-top:30px;">
-                <h3>Load a saved test question</h3>
-
-                <div class="form-group">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="ID"
-                           ng-model="ctrl.questionID">
-                </div>
-                <button type="submit" ng-click="ctrl.loadPost()">Post</button>
-            </div>
-            -->
-
-            <a href="#!/upload" class="waves-effect waves-light btn-large col s12 m6 offset-m3">Upload New Question</a>
         </div>
     </div>
-</body>
-</html>
+</div>

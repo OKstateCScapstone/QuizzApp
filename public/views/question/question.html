@@ -1,0 +1,35 @@
+<div class="row" layout="row">
+    <div class="col s3">
+        <div id="question-card" class="card orange darken-2">
+            <div class="card-content white-text">
+            <span class="card-title">
+                {{ ctrl.question.title }}
+            </span>
+                {{ ctrl.question.body }}
+                <br><br>
+                <a class="waves-effect waves-light btn orange darken-3" data-ng-click="submitStudentCode()">
+                    Submit
+                    <i class="material-icons right">send</i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col s6">
+        <div id="studentCodeMirror"></div>
+    </div>
+    <div id="output-column" class="col s3">
+        <div data-ng-repeat="x in warnings track by $index" id="warning" class="card yellow">
+            <div  class="card-content">
+                <i class="material-icons left">report_problem</i>
+                {{x}}
+            </div>
+        </div>
+        <div data-ng-repeat="x in errors track by $index" id="error" class="card red">
+            <div class="card-content">
+                <i class="material-icons left">report_problem</i>
+                {{x}}
+            </div>
+        </div>
+    </div>
+</div>
+

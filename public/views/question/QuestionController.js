@@ -3,8 +3,8 @@
 (function () {
     var app = angular.module('CS4570');
     app.controller('QuestionController', ['$http', '$scope', '$window', '$filter',
-        '$location', '$rootScope', '$cookies', '$routeParams', 'questionService',
-        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, questionService) {
+        '$location', '$rootScope', '$cookies', '$routeParams', 'questionService', 'userSubmissionService',
+        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, questionService, userSubmissionService) {
             var self = this;
             self.questionId = $routeParams.id;
 
@@ -14,12 +14,12 @@
                         self.user = $cookies.get ('user');
                         self.question = data;
 
-                        self.studentCodeMirror = CodeMirror (document.getElementById("studentCodeMirror"), {
-                            value: self.question.starterCode,
+                        self.studentCodeMirror = CodeMirror.fromTextArea (document.getElementById("studentCodeMirror"), {
                             mode: 'text/x-java',
                             lineNumbers: true,
                             theme: 'monokai'
-                        });
+                        }).setValue (self.question.starterCode);
+                        self.studentCodeMirror.refresh();
                     })
                     .catch (function (error) {
 
@@ -27,15 +27,17 @@
             }
 
             $scope.submitStudentCode = function () {
-                var studentSubmission = {};
-                studentSubmission["question"] = self.questionId;
-                studentSubmission["username"] = self.user;
-                studentSubmission["code"] = self.studentCodeMirror.getValue();
-                studentSubmission["result"] = false;
-                studentSubmission["score"] = 0;
-                console.log(studentSubmission);
+                var userSubmission = {};
+                userSubmission["question"] = self.questionId;
+                userSubmission["userId"] = self.user;
+                userSubmission["userCode"] = self.studentCodeMirror.getValue();
 
-                // TODO: Send to server
+                console.log(userSubmission);
+
+                userSubmissionService.evaluate (userSubmission)
+                    .then (function (data) {
+                        console.log (data);
+                    });
             };
 
         }]);

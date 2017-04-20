@@ -74,6 +74,11 @@
                 controller: 'QuestionPreviewEditController',
                 controllerAs: 'ctrl'
             })
+            .when('/question/:id', {
+                templateUrl: 'views/question/question.html',
+                controller: 'QuestionController',
+                controllerAs: 'ctrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

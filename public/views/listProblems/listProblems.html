@@ -1,16 +1,4 @@
 <div class="container">
-    <!--
-    <div class="page-header">
-        <div>
-            <a ng-repeat="topic in ctrl.activeTopics" ng-click="ctrl.removeTag(topic)" class="chip yellow">
-                {{topic}}
-            </a>
-            <a ng-repeat="topic in ctrl.topics" ng-click="ctrl.addTag(topic)" class="chip orange">
-                {{topic}}
-            </a>
-        </div>
-    </div>
-    -->
     <div class="row">
 
         <div ng-repeat="post in ctrl.activePosts | filter:{active:true} | orderBy: '-date'">
@@ -28,7 +16,6 @@
                                 <!--p>{{post.topics}}</p-->
                             </div>
                             <div class="card-action orange-text text-darken-3">
-                                <!--a ng-href="#!/editQuestion/{{post._id}}">View Problem</a-->
                                 <a ng-href="#!/question/{{post.id}}">View Problem</a>
                             </div>
                         </div>

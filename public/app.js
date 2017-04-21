@@ -74,6 +74,10 @@
                 controller: 'QuestionPreviewEditController',
                 controllerAs: 'ctrl'
             })
+            .when('/listProblems', {
+                templateUrl: 'views/listProblems/listProblems.html',
+                controller: 'listProblemsController',
+                controllerAs: 'ctrl'
             .when('/question/:id', {
                 templateUrl: 'views/question/question.html',
                 controller: 'QuestionController',

@@ -25,9 +25,8 @@ const questionSchema = new Schema({
         default: "java"
     },
     // The type of problem (Algorithm's, data structures, math, etc.)
-    topics: String,
-    // Categories to which this problem belongs to
-    categories: [String],
+    topics: [String],
+
     // The difficulty of this question
     difficulty: {
         type: String,

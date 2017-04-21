@@ -17,6 +17,12 @@
             return error;
         };
 
+        self.getQuestion = function (id) {
+            return $http.get($window._base_url + 'questions/' + id)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         self.getEditQuestion = function (id) {
             return $http.get($window._base_url + 'edit_questions/' + id)
                     .then(self.success)

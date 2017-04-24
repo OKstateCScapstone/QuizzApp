@@ -83,9 +83,15 @@
                 templateUrl: 'views/listProblems/listProblems.html',
                 controller: 'listProblemsController',
                 controllerAs: 'ctrl'
+            })
             .when('/question/:id', {
                 templateUrl: 'views/question/question.html',
                 controller: 'QuestionController',
+                controllerAs: 'ctrl'
+            })
+            .when('/submissions/:id', {
+                templateUrl: 'views/submissions/submissionView.html',
+                controller: 'SubmissionViewController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

@@ -36,6 +36,9 @@
                     Materialize.toast("Last Name is empty", 5000, 'rounded');
                 }
                 else{
+                    if($scope.user.cwid === null || $scope.user.cwid === "" || $scope.user.cwid === undefined){
+                        delete $scope.user.cwid;
+                    }
                     sendUser();
                 }
             };

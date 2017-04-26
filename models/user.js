@@ -24,8 +24,7 @@ const userSchema = new Schema({
     // CWID of the student
     cwid: {
         type: String,
-        index: true,
-        unique: true,
+        index: true
     },
     enrolledCourses: [{
         type: Schema.Types.ObjectId,

@@ -1,0 +1,27 @@
+<div class="row" layout="row">
+    <div class="col s3">
+        <div id="question-card" class="card orange darken-2">
+            <div class="card-content white-text">
+            <span class="card-title">
+                {{ ctrl.submissions.question.title }}
+            </span>
+                {{ ctrl.submissions.code }}
+                <br><br>
+            </div>
+        </div>
+    </div>
+    <div class="col s6">
+        <textarea id="studentCodeMirror"></textarea>
+        <div id="results-card" class="card orange darken-2">
+            <div class="card-content white-text">
+            <span class="card-title">
+                Test Cases Passed
+            </span>
+                ng-repeat = "{{result in ctrl.submissions.results}}" ng-if={{result == 'true'}}
+                Test Case {{ctrl.submissions.results.indexOf(result)}} <i class="material-icons">thumbs_up</i>
+
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>

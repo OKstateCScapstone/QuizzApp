@@ -1,35 +1,47 @@
-<div class="row" layout="row">
+<div class="row container100 monokai-background" >
     <div class="col s3">
         <div id="question-card" class="card orange darken-2">
             <div class="card-content white-text">
-            <span class="card-title">
-                {{ ctrl.question.title }}
-            </span>
+                <span class="card-title">
+                    {{ ctrl.question.title }}
+                </span>
                 {{ ctrl.question.body }}
-                <br><br>
+                <hr>
+
                 <a class="waves-effect waves-light btn orange darken-3" data-ng-click="submitStudentCode()">
                     Submit
-                    <i class="material-icons right">send</i>
+                    <i class="material-icons right">
+                        send
+                    </i>
                 </a>
             </div>
         </div>
+        <div data-ng-repeat="r in ctrl.testCaseResults track by $index" id="prcoessesdTestCases" ng-class="{'card green' : r.result, 'card red' : !r.result}">
+            <div ng-if="r.public" class="card-content">
+                <i ng-if="r.result" class="material-icons left">
+                    thumb_up
+                </i>
+                <i ng-if="!r.result" class="material-icons left">
+                    thumb_down
+                </i>
+                Test Case: {{r.input}}
+            </div>
+            <div ng-if="!r.public" class="card-content">
+                <i ng-if="r.result" class="material-icons left">
+                    thumb_up
+                </i>
+                <i ng-if="!r.result" class="material-icons left">
+                    thumb_down
+                </i>
+                Hidden Test Case
+            </div>
+        </div>
     </div>
-    <div class="col s6">
-        <textarea id="studentCodeMirror"></textarea>
+    <div class="col s6 monokai-background">
+        <div ui-codemirror="ctrl.options" ng-model="ctrl.code"/>
     </div>
     <div id="output-column" class="col s3">
-        <div data-ng-repeat="x in warnings track by $index" id="warning" class="card yellow">
-            <div  class="card-content">
-                <i class="material-icons left">report_problem</i>
-                {{x}}
-            </div>
-        </div>
-        <div data-ng-repeat="x in errors track by $index" id="error" class="card red">
-            <div class="card-content">
-                <i class="material-icons left">report_problem</i>
-                {{x}}
-            </div>
-        </div>
+
     </div>
 </div>
 

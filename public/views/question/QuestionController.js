@@ -39,14 +39,13 @@
 
                 userSubmissionService.evaluate (userSubmission)
                      .then (function (result) {
-                         self.resultData = result.data;
-
+                         console.log(result);
                          self.testCaseResults = [];
-                         for (let i = 0; i < data.question.testCases.length; i++) {
+                         for (let i = 0; i < result.data.question.testCases.length; i++) {
                              self.testCaseResults.push({
-                                 public: data.question.testCases[i].public,
-                                 result: data.results[i],
-                                 input: data.question.testCases[i].input
+                                 public: result.data.question.testCases[i].public,
+                                 result: result.data.results[i],
+                                 input: result.data.question.testCases[i].input
                             });
                          }
                      });

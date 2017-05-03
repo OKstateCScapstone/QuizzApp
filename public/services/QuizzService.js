@@ -17,8 +17,8 @@
             return error;
         };
 
-        self.getQuizzes = function (id) {
-            return $http.get($window._base_url + 'quizzes/' + id)
+        self.getQuizz = function (id) {
+            return $http.get($window._base_url + 'quizz/' + id)
                     .then(self.success)
                     .catch(self.failure);
         };
@@ -29,8 +29,14 @@
                 .catch(self.failure);
         };
 
+        self.getQuizzesForInstructorWithCourseId = function (email, courseId) {
+            return $http.get($window._base_url + 'quizzes/' + email + "?courseId=" + courseId)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         self.updateQuizz = function(quizz) {
-            return $http.put($window._base_url + 'quizzes/' + quizz._id, question)
+            return $http.put($window._base_url + 'quizz/' + quizz._id, quizz)
                 .then(self.success)
                 .catch(self.failure);
         };

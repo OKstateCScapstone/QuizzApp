@@ -39,6 +39,11 @@
                 controller: 'CourseController',
                 controllerAs: 'ctrl'
             })
+            .when('/course/:courseId/quizz/:id', {
+                templateUrl: 'views/quizz/quizz.html',
+                controller: 'QuizzController',
+                controllerAs: 'ctrl'
+            })
             .when('/my_questions', {
                 templateUrl: 'views/my_questions/my_questions.html',
                 controller: 'MyQuestionsController',

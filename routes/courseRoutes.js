@@ -46,6 +46,11 @@ module.exports = function (app) {
         res.json(courses);
     }));
 
+    app.get('/courses/students/:courseId', parts.array(), wrap(function * (req, res) {
+        var courses = yield Course.find({instructor: req.params.instructor}).exec();
+        res.json(courses);
+    }));
+
     app.post('/courses', wrap(function *(req, res) {
         co(function *() {
             const course = new Course(req.body);

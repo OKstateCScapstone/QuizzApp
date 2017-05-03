@@ -44,6 +44,7 @@ module.exports = function (app) {
         co(function *() {
             const fileContents = yield FileUploadController.readFile(path);
             var questionContents = QuestionParser.processFile(fileContents);
+            console.log(questionContents);
             var question = yield QuestionsController.saveParsedQuestion(questionContents, user);
             yield FileUploadController.saveFile(fileContents, question._id, "original.txt");
             // console.log(question.inputFiles);

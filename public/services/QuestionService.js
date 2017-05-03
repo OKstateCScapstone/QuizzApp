@@ -42,7 +42,7 @@
         };
 
         self.uploadQuestion = function(question) {
-            return $http.post($window._base_url + 'questions/' + question._id, question)
+            return $http.post($window._base_url + 'questions', question)
                 .then(self.success)
                 .catch(self.failure);
         };

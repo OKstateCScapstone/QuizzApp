@@ -12,6 +12,7 @@ passport.use(new LocalStrategy({
         usernameField: 'email' // use the email as the username for this user
     },
     function(username, password, done) {
+        username = username.toLowerCase();
         User.findOne({ email: username }, function (err, user) {
             if (err) {
                 return done(err);

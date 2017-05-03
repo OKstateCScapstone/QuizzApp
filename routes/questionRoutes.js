@@ -69,6 +69,7 @@ module.exports = function (app) {
             const questions = yield QuestionsController.findQuestions(query);
             res.status(200).json(questions)
         }).catch(function (err) {
+            console.log(err.stack);
             res.status(500).json(err);
         });
     }));

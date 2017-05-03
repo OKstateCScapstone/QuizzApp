@@ -42,7 +42,7 @@ const find = function (query) {
 self.save = function (user) {
     const deferred = Q.defer();
     const u = new User();
-    u.email = user.email;
+    u.email = user.email.toLowerCase();
     u.firstName = user.firstName;
     u.lastName = user.lastName;
     u.setPassword(user.password);
@@ -65,6 +65,7 @@ self.save = function (user) {
  *     a Promise that gets fulfilled with a Mongoose model Question object
  */
 self.findByEmail = function (email) {
+    email = email.toLowerCase();
     const query = {email: email};
     return findOne(query);
 };

@@ -4,13 +4,24 @@ const multer = require('multer');
 const parts = multer();
 const wrap = require('co-express');
 const co = require('co');
-const QuestionController = require('../controllers/questionController');
+const SubmissionsController = require('../controllers/userSubmissionController');
 const TestQuestions = require('../testObjects/TestQuestions');
 
 const UserSubmission = require("../models/userSubmission");
 const RunnerController = require('../controllers/runnerController');
 
 module.exports = function (app) {
+
+
+    app.get('/user_submission', wrap(function(req, res){
+        co(function *() {
+        const query = req.query || {};
+        const submissions = yield SubmissionsController.findSubmissions(query);
+        res.status(200).json(submissions)
+    }).catch(function (err) {
+        res.status(500).json(err);
+    });
+    }));
 
     app.post('/user_submission', parts.array(), wrap(function *(req, res) {
         const questionId = req.body.questionId;

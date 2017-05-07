@@ -23,6 +23,18 @@
                 .catch(self.failure);
         };
 
+        self.getEvaluations = function (username){
+            return $http.get($window._base_url +'user_submission?username=' + username)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
+        self.getEvaluations = function (id){
+            return $http.get($window._base_url +'user_submission?id=' + id)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         return self;
     }
 

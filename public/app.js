@@ -39,6 +39,11 @@
                 controller: 'CourseController',
                 controllerAs: 'ctrl'
             })
+            .when('/course/:courseId/quizz/:id', {
+                templateUrl: 'views/quizz/quizz.html',
+                controller: 'QuizzController',
+                controllerAs: 'ctrl'
+            })
             .when('/my_questions', {
                 templateUrl: 'views/my_questions/my_questions.html',
                 controller: 'MyQuestionsController',
@@ -57,6 +62,11 @@
             .when('/upload', {
                 templateUrl: 'views/upload/upload.html',
                 controller: 'ProblemUploadController',
+                controllerAs: 'ctrl'
+            })
+            .when('/user_submission', {
+                templateUrl: 'views/submissions/submissions.html',
+                controller: 'SubmissionsController.js',
                 controllerAs: 'ctrl'
             })
             .when('/questionPreview/:id', {
@@ -82,6 +92,11 @@
             .when('/question/:id', {
                 templateUrl: 'views/question/question.html',
                 controller: 'QuestionController',
+                controllerAs: 'ctrl'
+            })
+            .when('/submissions/:id', {
+                templateUrl: 'views/submissions/submissionView.html',
+                controller: 'SubmissionViewController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

@@ -13,6 +13,23 @@
             }
 
             $scope.user = {};
+            $scope.recover = {};
+
+
+            $scope.recoverPassword = function() {
+                $scope.recover.username = $scope.recoveryEmail;
+                $http.post($window._base_url + 'forgot_password', $scope.user.email)
+                    .then(function(result){
+                        var data = result.data;
+                        var toastContent = "Please check your email to reset your password."
+
+                        Materialize.toast(toastContent, 5000);
+                    })
+                    .catch(function(err){
+                        Materialize.toast("Please try again", 5000);
+                        console.log(err);
+                    });
+            };
 
             self.signIn = function () {
                 // 5 is about the min length of an email address

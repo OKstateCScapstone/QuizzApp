@@ -84,10 +84,10 @@ module.exports = function (app) {
 
     app.post('/forgot_password', parts.array(), function (req, res) {
         co(function *() {
-            const emailSent = yield SendEmailController.resetPassword(req.query.username);
+            const emailSent = yield SendEmailController.resetPassword(req.body.username);
             res.status(200).json({
                 success: true,
-                message: "Check your email for next esteps",
+                message: "Check your email for next steps",
                 data: emailSent
             });
         }).catch(function (err) {

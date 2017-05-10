@@ -23,10 +23,10 @@
                type="submit">Create Account</a>
 
             <div class="col s12 center" style="margin-top: 30px;">
-                <a class="orange-text text-darken-3"
-                   href="#!/sign_up"
-                   type="submit">Forgot Username or Password?</a>
+                <a class="orange-text text-darken-3" href data-target='forgotModal' modal>Forgot Username or Password?</a>
             </div>
         </div>
     </div>
 </div>
+
+<div ng-include="'views/sign_in/forgotModal.html'"></div>

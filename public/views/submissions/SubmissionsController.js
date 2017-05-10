@@ -6,8 +6,8 @@
     var app = angular.module('CS4570');
 
     app.controller('SubmissionsController',
-        ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies', 'userSubmissionService',
-            function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, submissionsService) {
+        ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies', 'userSubmissionService', 'encodeService',
+            function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, submissionsService, encodeService) {
                 var self = this;
 
                 if (!$cookies.get("token")) {
@@ -23,7 +23,7 @@
                     $location.path("submissions/" + submission._id);
                 };
 
-                submissionsService.getEvaluations(user.username)
+                submissionsService.getEvaluations(self.user.username)
                     .then(function (data) {
                         self.submissions = data;
                     });

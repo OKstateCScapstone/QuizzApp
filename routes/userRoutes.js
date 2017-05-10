@@ -4,6 +4,7 @@ const parts = multer();
 const wrap = require('co-express');
 const co = require('co');
 const UserController = require('../controllers/userController');
+const User = require('../models/user');
 const ActivationController = require('../controllers/activationController');
 const SendEmailController = require('../controllers/sendEmailController');
 const ResetPasswordController = require('../controllers/resetPasswordController');
@@ -122,7 +123,9 @@ module.exports = function (app) {
     app.get('/users/:id', parts.array(), function (req, res) {
         co(function *() {
             const id = req.params.id;
-            var user = yield UserController.findById(id);
+            var user = yield User.findById(id)
+                .populate('enrolledCourses')
+                .exec();
             if (user) {
                 res.json(user);
                 return;

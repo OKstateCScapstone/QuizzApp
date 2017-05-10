@@ -22,7 +22,6 @@
                 if (self.user) {
                     userService.getUser(self.user._id)
                         .then(function (result) {
-                            $location.path("/home");
                             self.isInstructor = result.isInstructor;
                             $cookies.put("user", encodeService.encode64(JSON.stringify(result)));
                         })

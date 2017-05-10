@@ -8,6 +8,21 @@ main {
     flex: 1 0 auto;
 }
 
+.spaced-text {
+    line-height: 1.8em;
+}
+
+.pill {
+    border-radius: 20px;
+}
+
+.padding-5 {
+    padding: 5px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
 
 .CodeMirror {
     height: 100vh;
@@ -41,6 +56,10 @@ main {
     margin-top: 20px;
 }
 
+.top40 {
+    margin-top: 40px;
+}
+
 .bottom20 {
     margin-bottom: 20px;
 }
@@ -70,4 +89,17 @@ main {
     border-radius: 20px;
     color: whitesmoke;
     padding: 5px 10px;
+}
+
+.bar-text {
+    font-size: 1.4em;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }

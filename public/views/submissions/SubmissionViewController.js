@@ -5,27 +5,27 @@
 (function () {
     var app = angular.module('CS4570');
 
-    app.controller('SubmissionsController',
+    app.controller('SubmissionViewController',
         ['$http', '$scope', '$window', '$filter', '$location', '$rootScope', '$cookies', '$routeParams', 'userSubmissionService',
             function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, submissionsService) {
                 var self = this;
 
                 self.submissionId = $routeParams.id;
 
-                if (self.submissionId) {
-                    submissionsService.getEvaluations(self.submissionId)
-                        .then(function (data) {
-                            self.user = $cookies.get ('user');
-                            self.question = data.question;
+                self.user = $cookies.get('user');
 
-                            self.studentCodeMirror = CodeMirror.fromTextArea (document.getElementById("studentCodeMirror"), {
+                if (self.submissionId) {
+                    submissionsService.getEvaluationById(self.submissionId)
+                        .then(function (data) {
+                            self.question = data.question;
+                            self.studentCodeMirror = CodeMirror.fromTextArea(document.getElementById("studentCodeMirror"), {
                                 mode: 'text/x-java',
                                 lineNumbers: true,
                                 theme: 'monokai'
-                            }).setValue (self.question.code);
+                            }).setValue(self.question.code);
                             self.studentCodeMirror.refresh();
                         })
-                        .catch (function (error) {
+                        .catch(function (error) {
 
                         });
                 }

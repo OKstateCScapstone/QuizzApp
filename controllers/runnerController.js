@@ -12,11 +12,11 @@ const self = {};
  * @param solutionCode
  *      Solution code (a complete Java program)
  * @param userCode
- *		User code (to be spliced in to the solutionCode)
+ *        User code (to be spliced in to the solutionCode)
  * @param spliceTag
- *		Tag used to delimit the splice point
+ *        Tag used to delimit the splice point
  * @return
- * 		The spliced code (or empty string of not successful)
+ *        The spliced code (or empty string of not successful)
  */
 self.spliceCode = function (solutionCode, userCode, spliceTag) {
     var start = solutionCode.indexOf(spliceTag);
@@ -34,13 +34,13 @@ self.spliceCode = function (solutionCode, userCode, spliceTag) {
 /**
  * Run a program from the command line (like javac or java)
  * @param commandLine
- *		The command line to use to run the program
+ *        The command line to use to run the program
  * @return
- *		The output of stdout or error.
+ *        The output of stdout or error.
  */
-self.runCommandLine = function(commandLine) {
+self.runCommandLine = function (commandLine) {
     const deferred = Q.defer();
-    exec(commandLine, function(error, stdout, stderr) {
+    exec(commandLine, function (error, stdout, stderr) {
         if (error) {
             console.log("[" + commandLine + "] failed!\n");
             deferred.reject(error);
@@ -65,7 +65,7 @@ self.runCommandLine = function(commandLine) {
  *      Also determines whether to splice in userCode, or use the solution
  *      code directly.
  */
-self.compileAndRunTestCases = function(question, userId, userCode, saveResults) {
+self.compileAndRunTestCases = function (question, userId, userCode, saveResults) {
     var deferred = Q.defer();
     co(function *() {
 
@@ -107,7 +107,7 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
             // Add the path to the input file names on the command line.
             // This will have a problem if those names are supposed to
             // be used for another purpose.
-            for (var j=0; j<inputFiles.length; j++) {
+            for (var j = 0; j < inputFiles.length; j++) {
                 args = args.replace(inputFiles[j].name, runPath + inputFiles[j].name);
             }
 
@@ -128,7 +128,7 @@ self.compileAndRunTestCases = function(question, userId, userCode, saveResults) 
 
         deferred.resolve(runStatus);
 
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.log(error.stack);
         deferred.reject(error);
     });

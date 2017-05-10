@@ -21,6 +21,11 @@ const userSubmissionSchema = new Schema({
     score: {
         type: Number,
         default: 0
+    },
+    updatedAt: {
+        type: Date,
+        index: true,
+        default: new Date()
     }
 });
 

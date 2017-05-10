@@ -24,13 +24,13 @@
         };
 
         self.getEvaluations = function (username){
-            return $http.get($window._base_url +'user_submission?username=' + username)
+            return $http.get($window._base_url +'user_submissions?username=' + username)
                 .then(self.success)
                 .catch(self.failure);
         };
 
-        self.getEvaluations = function (id){
-            return $http.get($window._base_url +'user_submission?id=' + id)
+        self.getEvaluationById = function (id){
+            return $http.get($window._base_url +'user_submission/' + id)
                 .then(self.success)
                 .catch(self.failure);
         };

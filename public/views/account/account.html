@@ -1,28 +1,21 @@
+<nav>
+    <div class="nav-wrapper orange darken-2">
+        <div class="container white-text">
+            <span class="bar-text"> Welcome {{ ctrl.user.firstName }} {{ ctrl.user.lastName }}</span>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <div class="row top20">
-
-        <div class="col s12">
-            <h5 class="grey-text text-darken-4">Welcome {{ ctrl.user.firstName }} {{ ctrl.user.lastName }}, </h5>
-        </div>
-
-        <div class="col s12 m6 top20">
+        <div class="col s12 m9 top20">
             <h5>Courses</h5>
         </div>
-        <div class="col s12 m6 top20 right">
+        <div class="col s12 m3 top20 right">
             <div class="row">
-                <a href class="waves btn teal darken-2 white-text top10 col s12 offset-m3 m4" data-target='newCourseModal' modal ng-show="ctrl.isInstructor">
-                    &nbsp;&nbsp;&nbsp;Add Course&nbsp;&nbsp;&nbsp;
-                </a>
-                <a href class="waves-effect waves-light btn grey darken-4 white-text top10" data-target='newCourseModalStudent' modal ng-show="!ctrl.isInstructor">
-
-                <a href class="waves btn teal darken-2 white-text top10 col s12 offset-m3 m4" data-target='newCourseModal' modal>
-
-                    &nbsp;&nbsp;&nbsp;Add Course&nbsp;&nbsp;&nbsp;
-                </a>
-                <a href="#!/user_submission" class="waves btn teal darken-2 white-text top10 col s12 m4 offset-m1">
-                    &nbsp;&nbsp;&nbsp;View Grades&nbsp;&nbsp;&nbsp;
-                    <i class="material-icons">grade</i>
-                </a>
+                <a href class="waves btn teal darken-2 white-text top10 col s12"
+                   data-target='newCourseModal' modal ng-show="ctrl.isInstructor">&nbsp;&nbsp;&nbsp;Add Course&nbsp;&nbsp;&nbsp;</a>
+                <a href class="waves-effect waves-light btn grey darken-4 white-text top10 col s12"
+                   data-target='newCourseModalStudent' modal ng-show="!ctrl.isInstructor">&nbsp;&nbsp;&nbsp;Add Course&nbsp;&nbsp;&nbsp;</a>
             </div>
         </div>
     </div>
@@ -31,17 +24,14 @@
             <thead>
             <tr class="grey-text text-darken-4">
                 <th>Name</th>
-                <th  ng-show="!ctrl.isInstructor">Class Number</th>
+                <th ng-show="!ctrl.isInstructor">Class Number</th>
                 <th>Description</th>
                 <th>Season</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th ng-show="ctrl.isInstructor">Code</th>
-                <th ng-show="ctrl.isInstructor" colspan="3"> </th>
-                <th ng-show="ctrl.isInstructor">View</th>
+                <th ng-show="ctrl.isInstructor" colspan="3"></th>
                 <th ng-show="!ctrl.isInstructor">Instructor E-Mail</th>
-                <th>Code</th>
-                <th colspan="3"></th>
                 <th>View</th>
             </tr>
             </thead>
@@ -66,21 +56,16 @@
                 </td>
                 <td ng-show="ctrl.isInstructor">
                     <a href data-target="newQuizzModal" modal ng-click="ctrl.newQuizz(course)" class="teal-text text-darken-2">
-                <td>
-                    <a href data-target="newQuizzModal" modal ng-click="ctrl.newQuizz(course)"
-                       class="teal-text text-darken-2">
                         New Quizz
                     </a>
                 </td>
-                <td ng-show="ctrl.isInstructor">
-                    <a href class="modal-action modal-close orange-text text-darken-3">
+                <td ng-show="!ctrl.isInstructor"> {{ course.instructor }}</td>
                 <td>
                     <a href ng-click="ctrl.viewCourse(course)"
                        class="modal-action modal-close orange-text text-darken-3">
                         <i class="material-icons">open_in_new</i>
                     </a>
                 </td>
-                <td ng-show="!ctrl.isInstructor"> {{ course.instructor }}</td>
             </tr>
             </tbody>
         </table>

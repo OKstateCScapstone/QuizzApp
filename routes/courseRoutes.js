@@ -6,7 +6,7 @@ const co = require('co');
 const Course = require('../models/course');
 const UserController = require('../controllers/userController');
 
-const checkUsernameAndReturn = function (res) {
+const checkUsernameAndReturn = function (username, res) {
     if (username == null) {
         res.status(500).json({
             success: false,
@@ -51,6 +51,14 @@ module.exports = function (app) {
         res.json(courses);
     }));
 
+    /**
+     * Gets all the courses to which a student is enrolled.
+     */
+    app.get('/courses/students/enrolled', parts.array(), wrap(function * (req, res) {
+        var courses = yield Course.find({instructor: req.params.instructor}).exec();
+        res.json(courses);
+    }));
+
     app.post('/courses', wrap(function *(req, res) {
         co(function *() {
             const course = new Course(req.body);
@@ -72,15 +80,17 @@ module.exports = function (app) {
 
     }));
 
-    app.post('/enroll/:code', wrap(function *(req, res) {
+    app.post('/enroll/', wrap(function *(req, res) {
         co(function *() {
             // Check if username was provided by the query
-            const username = req.query.username;
-            if (!checkUsernameAndReturn(res)) {
+
+            const code = req.body.code;
+            const username = req.body.username;
+            if (!checkUsernameAndReturn(username, res)) {
                 return;
             }
             // Check if a course can be find for the specific code
-            const course = yield Course.findOne({code: req.params.code}).exec();
+            const course = yield Course.findOne({code: code}).exec();
             if (!checkCourseAndReturn(course, res)) {
                 return;
             }
@@ -112,7 +122,10 @@ module.exports = function (app) {
             });
         }).catch(function (err) {
             console.log(err.stack);
-            res.status(500).json(err);
+            res.status(500).json({
+                success: false,
+                message: "An error occurred. Try again later."
+            });
         });
     }));
 };

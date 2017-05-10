@@ -3,9 +3,6 @@
         <div class="col s12">
             <h5 class="grey-text text-darken-4">{{ ctrl.quizz.name }}</h5>
         </div>
-        <div class="col s12 grey-text text-darken-3">
-            {{ ctrl.quizz.description }}
-        </div>
         <div class="col s12 m3 grey-text text-darken-1 top10">
             Start Date: &nbsp;{{ ctrl.quizz.startDate | date: date}}
         </div>
@@ -17,6 +14,9 @@
         </div>
         <div class="col s12 m3 grey-text text-darken-1 top10">
             Points: {{ ctrl.quizz.points}}
+        </div>
+        <div class="col s12 grey-text text-darken-3 top20">
+            {{ ctrl.quizz.description }}
         </div>
     </div>
 

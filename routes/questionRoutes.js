@@ -66,7 +66,9 @@ module.exports = function (app) {
     app.get('/questions', wrap(function *(req, res) {
         co(function *() {
             const query = req.query || {};
-            const questions = yield QuestionsController.findQuestions(query);
+            const questions = yield Question.find(query)
+                .sort({dueDate: 1})
+                .exec();
             res.status(200).json(questions)
         }).catch(function (err) {
             console.log(err.stack);

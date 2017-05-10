@@ -17,8 +17,17 @@
 
             self.course = {};
             self.quizz = {};
-
+            self.courseCode = "";
             self.user = JSON.parse(encodeService.decode64($cookies.get('user')));
+            console.log(self.user);
+            self.isInstructor = self.user.isInstructor;
+
+            var getInstructorCourses = function () {
+                courseService.getCoursesForInstructor(self.user.email)
+                    .then(function (result) {
+                        self.courses = result;
+                    });
+            };
 
             self.editCourse = function (course) {
                 self.course = course;
@@ -36,6 +45,23 @@
                     });
             };
 
+            self.enrollStudent = function () {
+                if (self.courseCode != "") {
+                    var body = {
+                        code: self.courseCode,
+                        username: self.user.email
+                    };
+                    courseService.enrollStudent(body)
+                        .then(function (result) {
+                            if (result.success) {
+                                Materialize.toast("Successfully enrolled in course.", 4000);
+                            } else {
+                                Materialize.toast(result.message, 4000);
+                            }
+                        });
+                }
+            };
+
             self.addQuizz = function () {
                 self.quizz.instructor = self.user.email;
                 quizzService.addQuizz(self.quizz)
@@ -46,13 +72,19 @@
             };
 
             self.viewCourse = function (course) {
-                $location.path("course/" + course._id);
+                if (self.isInstructor) {
+                    $location.path("course/" + course._id);
+                } else {
+                    $location.path("course/student/" + course._id);
+                }
             };
 
-            courseService.getCoursesForInstructor(self.user.email)
-                .then(function (result) {
-                    self.courses = result;
-                });
+            if (self.isInstructor) {
+                getInstructorCourses();
+            } else {
+                self.courses = self.user.enrolledCourses;
+            }
+
 
         }]);
 })();

@@ -47,6 +47,12 @@
                 .catch(self.failure);
         };
 
+        self.enrollStudent = function(enrollBody) {
+            return $http.post($window._base_url + 'enroll/', enrollBody)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         return self;
     }
 

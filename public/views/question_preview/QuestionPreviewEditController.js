@@ -76,7 +76,7 @@
                         self.question = result.question;
                         self.question.filename = result.filename;
                         if (self.questionType == 'preview') {
-                            // TODO send to the user preview. Need the page to be done first
+                            $location.path("question/" + self.result._id);
                         } else {
                             Materialize.toast('Question updated.', 4000);
                         }
@@ -86,7 +86,7 @@
             self.upload = function () {
                 questionService.uploadQuestion(self.question)
                     .then(function (result) {
-                        // TODO send to the user preview. Need the page to be done first
+                        $location.path("question/" + result._id);
                     });
             };
         }]);

@@ -3,8 +3,8 @@
 (function () {
     var app = angular.module('CS4570');
     app.controller('QuestionPreviewEditController', ['$http', '$scope', '$window', '$filter',
-        '$location', '$rootScope', '$cookies', '$routeParams', 'questionService',
-        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, questionService) {
+        '$location', '$rootScope', '$cookies', '$routeParams', 'questionService', 'encodeService',
+        function ($http, $scope, $window, $filter, $location, $rootScope, $cookies, $routeParams, questionService, encodeService) {
 
             var self = this;
             $scope.difficulties = ["Easy", "Medium", "Hard"];
@@ -17,6 +17,9 @@
             } else {
                 self.questionType = "new";
             }
+
+            self.user = JSON.parse(encodeService.decode64($cookies.get('user')));
+
 
             self.newTestCase = {};
             self.newInputFile = {};
@@ -63,11 +66,19 @@
 
             self.submit = function () {
                 self.question.difficulty = self.question.difficulty.replace(/\s\s*$/gm, "");
+                self.question.username = self.user.email;
                 if (self.questionId) {
                     self.update();
                     return
                 }
                 self.upload();
+            };
+
+            self.testNumber = function (text) {
+                if(text === "" || text === undefined || text === null) {
+                    text = '0';
+                }
+                return !isNaN(text);
             };
 
             self.update = function () {
@@ -86,6 +97,7 @@
             self.upload = function () {
                 questionService.uploadQuestion(self.question)
                     .then(function (result) {
+                        Materialize.toast('Question Uploaded Successfully! =D =)', 5000);
                         $location.path("question/" + result._id);
                     });
             };

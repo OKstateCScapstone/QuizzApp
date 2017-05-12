@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row top20 bottom20">
-        <div class="row">
+        <div name="qForm" class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">label</i>
                 <input id="title" ng-model="ctrl.question.title" type="text" class="validate">
@@ -37,8 +37,8 @@
 
             <div class="input-field col s12 m4">
                 <i class="material-icons prefix">bookmark</i>
-                <input id="points" ng-model="ctrl.question.points" type="text" class="validate">
-                <label for="points">Points</label>
+                <input id="points" name="points" ng-model="ctrl.question.points" type="text" ng-class="(ctrl.testNumber(ctrl.question.points)) ? 'valid' : 'invalid'" >
+                <label for="points" data-error="Must be floating point or integer">Points</label>
             </div>
 
             <div class="input-field col s12 m4">

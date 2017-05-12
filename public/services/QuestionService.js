@@ -13,7 +13,7 @@
         };
 
         self.failure = function (error) {
-            console.log(error.data);
+            console.log(error);
             return error;
         };
 
@@ -48,6 +48,9 @@
         };
 
         self.uploadQuestion = function(question) {
+
+            console.log(question);
+
             return $http.post($window._base_url + 'questions', question)
                 .then(self.success)
                 .catch(self.failure);

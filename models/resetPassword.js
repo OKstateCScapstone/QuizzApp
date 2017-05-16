@@ -11,7 +11,8 @@ const resetPasswordSchema = new Schema({
         type: String,
         required: true,
         index: true
-    }
+    },
+    resetPasswordExpires: Date
 });
 
 module.exports = mongoose.model('ResetPassword', resetPasswordSchema);

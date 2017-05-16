@@ -35,6 +35,12 @@
                 .catch(self.failure);
         };
 
+        self.forgotPassword = function(user) {
+            return $http.post($window._base_url + 'forgot_password/', user)
+                .then(self.success)
+                .catch(self.failure);
+        };
+
         return self;
     }
 

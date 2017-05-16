@@ -4,18 +4,21 @@ const Schema = mongoose.Schema;
 
 const studentQuizzSchema = new Schema({
     student: {
+        //type: String,
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
         index: true
     },
     quizz: {
+        //type: String,
         type: Schema.Types.ObjectId,
         ref: "Quizz",
         required: true,
         index: true
     },
     submissions: [{
+        //type: String,
         type: Schema.Types.ObjectId,
         ref: "UserSubmission"
     }],

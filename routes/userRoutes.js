@@ -140,4 +140,24 @@ module.exports = function (app) {
             });
         });
     });
+
+    app.put('/make_admin', parts.array(), function (req, res) {
+        co(function *() {
+            const username = req.body.username;
+            const isInstructor = req.body.isInstructor;
+
+            const user = yield UserController.findByEmail(username);
+            user.isInstructor = isInstructor;
+            yield user.save();
+
+            res.status(200).json({
+                success: true,
+                message: "User successfully updated.",
+                data: user
+            });
+        }).catch(function (err) {
+            console.log(err); // log the error to the console
+            ResponseHelper.response500(res, "Error updating user: " + err.message);
+        });
+    });
 };

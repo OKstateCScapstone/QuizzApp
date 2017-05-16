@@ -36,7 +36,10 @@ const questionSchema = new Schema({
         index: true
     },
     // How many points this assignment is worth for students
-    points: Number,
+    points: {
+        type: Number,
+        default: 0
+    },
     // Test cases for this specific program
     testCases: [{
         // input to be passed to java ProgramName

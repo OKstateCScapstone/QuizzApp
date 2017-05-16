@@ -111,7 +111,9 @@ module.exports = function (app) {
             const question = yield QuestionsController.save(req.body);
             const filename = req.body.filename;
             saveInputFiles(question);
-            question.classname = filename.replace(".java", "");
+            if(question) {
+                question.classname = filename.replace(".java", "");
+            }
             yield question.save();
             res.status(200).json({
                 question: question,
